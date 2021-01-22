@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
+    <a class="navbar-brand" th:text="#{navbar.title}"></a>
+    <div class="row" style="margin-right: 10px">
+        <div style="margin-right: 30px">
+            <span th:with="urlBuilder=${T(org.springframework.web.servlet.support.ServletUriComponentsBuilder).fromCurrentRequest()}">
+            <a class="btn btn-default" th:href="${urlBuilder.replaceQueryParam('lang', 'ua').toUriString()}"
+               th:text="#{lang.ua.label}"></a>
+            <a class="btn btn-default" th:href="${urlBuilder.replaceQueryParam('lang', 'en').toUriString()}"
+               th:text="#{lang.en.label}"></a>
+            </span>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <a class="btn btn-success" th:href="@{/logout}" th:text="#{navbar.logout}"></a>
+        </div>
+        <div sec:authorize="isAnonymous()">
+            <a class="btn btn-success" th:href="@{/login}" th:text="#{login.button}"></a>
+            <a class="btn btn-primary" th:href="@{/register}" th:text="#{registration.button}"></a>
+        </div>
+    </div>
+</nav>
+</html>
