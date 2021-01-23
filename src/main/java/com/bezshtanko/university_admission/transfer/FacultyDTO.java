@@ -29,6 +29,7 @@ public class FacultyDTO {
     private Integer contractPlaces;
     private Set<SubjectDTO> subjects;
     private Set<Enrollment> enrollments;
+    private Integer totalPlaces;
 
     public FacultyDTO(Faculty faculty, Locale locale) {
         if (locale.getLanguage().equals(new Locale("en").getLanguage())) {
@@ -46,6 +47,7 @@ public class FacultyDTO {
                 .stream()
                 .map(s -> new SubjectDTO(s, locale))
                 .collect(Collectors.toSet());
+        this.totalPlaces = faculty.getTotalPlaces();
         this.enrollments = faculty.getEnrollments(); //TODO
     }
 

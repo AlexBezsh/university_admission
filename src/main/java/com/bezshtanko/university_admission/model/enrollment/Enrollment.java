@@ -37,8 +37,16 @@ public class Enrollment {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "mark")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "mark")
     private Set<Mark> marks;
+
+    @Transient
+    private Integer marksSum;
+
+    @PostLoad
+    private void countMarksSum() {
+        marksSum = marks.stream().mapToInt(Mark::getMark).sum();
+    }
 
     @Override
     public boolean equals(Object o) {

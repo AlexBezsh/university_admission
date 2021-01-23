@@ -54,12 +54,20 @@ public class Faculty {
     @Min(0)
     private Integer contractPlaces;
 
+    @Transient
+    private Integer totalPlaces;
+
     @OneToMany(targetEntity = Subject.class, fetch = FetchType.EAGER)
     private Set<Subject> subjects;
 
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "faculty_id")
     private Set<Enrollment> enrollments;
+
+    @PostLoad
+    private void countTotalPlaces() {
+        totalPlaces = stateFundedPlaces + contractPlaces;
+    }
 
     @Override
     public boolean equals(Object o) {

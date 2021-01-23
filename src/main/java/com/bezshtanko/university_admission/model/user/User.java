@@ -62,10 +62,6 @@ public class User implements UserDetails {
     @Size(min = 2, max = 250)
     private String education;
 
-    @Column(name = "certificate_path")
-    @Size(min = 2, max = 250)
-    private String certificatePath;
-
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "faculty_id")
     private Set<Enrollment> enrollments;

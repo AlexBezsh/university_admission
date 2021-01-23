@@ -76,17 +76,6 @@
                            th:placeholder="#{user.education}"
                            required>
                 </div>
-                <div class="form-group">
-                    <label for="certificate" th:text="#{user.certificate}"></label>
-                    <br/><span class="error" style="color:red" th:if="${#fields.hasErrors('certificate')}" th:errors="*{certificate}"></span>
-                    <input id="certificate"
-                           type="file"
-                           class="file-input"
-                           size="1000000"
-                           accept=".jpg, .jpeg"
-                           th:field="*{certificate}"
-                           th:placeholder="#{user.certificate}">
-                </div>
                 <button type="submit" class="btn btn-default" style="margin-top:30px" th:text="#{submit}">
                 </button>
             </form>
