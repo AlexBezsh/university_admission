@@ -3,14 +3,11 @@ package com.bezshtanko.university_admission.transfer;
 import com.bezshtanko.university_admission.model.enrollment.Enrollment;
 import com.bezshtanko.university_admission.model.faculty.Faculty;
 import com.bezshtanko.university_admission.model.faculty.Status;
-import com.bezshtanko.university_admission.model.subject.Subject;
 import lombok.*;
 
-import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Size;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -27,11 +24,11 @@ public class FacultyDTO {
     private String description;
     private Integer stateFundedPlaces;
     private Integer contractPlaces;
-    private Set<SubjectDTO> subjects;
-    private Set<Enrollment> enrollments;
     private Integer totalPlaces;
+    private List<SubjectDTO> subjects;
+    private List<Enrollment> enrollments;
 
-    public FacultyDTO(Faculty faculty, Locale locale) {
+    public FacultyDTO(Faculty faculty, Locale locale, boolean includeEnrollments) {
         if (locale.getLanguage().equals(new Locale("en").getLanguage())) {
             this.name = faculty.getNameEn();
             this.description = faculty.getDescriptionEn();
@@ -42,13 +39,16 @@ public class FacultyDTO {
         this.status = faculty.getStatus();
         this.stateFundedPlaces = faculty.getStateFundedPlaces();
         this.contractPlaces = faculty.getContractPlaces();
+        this.totalPlaces = faculty.getTotalPlaces();
         this.subjects = faculty
                 .getSubjects()
                 .stream()
                 .map(s -> new SubjectDTO(s, locale))
-                .collect(Collectors.toSet());
-        this.totalPlaces = faculty.getTotalPlaces();
-        this.enrollments = faculty.getEnrollments(); //TODO
+                .sorted(Comparator.comparing(SubjectDTO::getName))
+                .collect(Collectors.toList());
+        if (includeEnrollments) {
+            this.enrollments = faculty.getEnrollments(); //TODO
+        }
     }
 
 }

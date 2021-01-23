@@ -10,6 +10,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -64,7 +65,7 @@ public class User implements UserDetails {
 
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "faculty_id")
-    private Set<Enrollment> enrollments;
+    private List<Enrollment> enrollments;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

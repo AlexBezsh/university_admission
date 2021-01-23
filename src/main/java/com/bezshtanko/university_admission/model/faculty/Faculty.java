@@ -7,8 +7,8 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -58,11 +58,11 @@ public class Faculty {
     private Integer totalPlaces;
 
     @OneToMany(targetEntity = Subject.class, fetch = FetchType.EAGER)
-    private Set<Subject> subjects;
+    private List<Subject> subjects;
 
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "faculty_id")
-    private Set<Enrollment> enrollments;
+    private List<Enrollment> enrollments;
 
     @PostLoad
     private void countTotalPlaces() {

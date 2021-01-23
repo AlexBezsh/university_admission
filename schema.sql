@@ -9,11 +9,17 @@
 CREATE SCHEMA IF NOT EXISTS `university_admission` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
 USE `university_admission` ;
 
+DROP TABLE IF EXISTS `university_admission`.`mark` ;
+DROP TABLE IF EXISTS `university_admission`.`enrollment` ;
+DROP TABLE IF EXISTS `university_admission`.`faculty_subjects` ;
+DROP TABLE IF EXISTS `university_admission`.`user_role` ;
+DROP TABLE IF EXISTS `university_admission`.`faculty` ;
+DROP TABLE IF EXISTS `university_admission`.`user` ;
+DROP TABLE IF EXISTS `university_admission`.`subject` ;
+
 -- -----------------------------------------------------
 -- Table `university_admission`.`faculty`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `university_admission`.`faculty` ;
-
 CREATE TABLE IF NOT EXISTS `university_admission`.`faculty` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `name_en` VARCHAR(255) NOT NULL,
@@ -35,8 +41,6 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 -- Table `university_admission`.`user`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `university_admission`.`user` ;
-
 CREATE TABLE IF NOT EXISTS `university_admission`.`user` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `full_name` VARCHAR(127) NOT NULL,
@@ -46,7 +50,6 @@ CREATE TABLE IF NOT EXISTS `university_admission`.`user` (
   `city` VARCHAR(127) NOT NULL,
   `region` VARCHAR(127) NOT NULL,
   `education` VARCHAR(255) NOT NULL,
-  `certificate_path` VARCHAR(255) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
 ENGINE = InnoDB
@@ -58,8 +61,6 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 -- Table `university_admission`.`enrollment`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `university_admission`.`enrollment` ;
-
 CREATE TABLE IF NOT EXISTS `university_admission`.`enrollment` (
   `id` BIGINT NOT NULL,
   `user_id` BIGINT NOT NULL,
@@ -84,8 +85,6 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 -- Table `university_admission`.`subject`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `university_admission`.`subject` ;
-
 CREATE TABLE IF NOT EXISTS `university_admission`.`subject` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `type` ENUM('SCHOOL', 'EXAM') NOT NULL,
@@ -103,8 +102,6 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 -- Table `university_admission`.`faculty_subjects`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `university_admission`.`faculty_subjects` ;
-
 CREATE TABLE IF NOT EXISTS `university_admission`.`faculty_subjects` (
   `faculty_id` BIGINT NOT NULL,
   `subjects_id` BIGINT NOT NULL,
@@ -126,8 +123,6 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 -- Table `university_admission`.`mark`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `university_admission`.`mark` ;
-
 CREATE TABLE IF NOT EXISTS `university_admission`.`mark` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `enrollment_id` BIGINT NOT NULL,
@@ -152,8 +147,6 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 -- Table `university_admission`.`user_role`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `university_admission`.`user_role` ;
-
 CREATE TABLE IF NOT EXISTS `university_admission`.`user_role` (
   `user_id` BIGINT NOT NULL,
   `roles` VARCHAR(45) NOT NULL,

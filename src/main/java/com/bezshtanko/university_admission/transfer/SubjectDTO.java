@@ -14,12 +14,10 @@ import java.util.Locale;
 @ToString
 public class SubjectDTO {
 
-    private Long id;
     private String name;
     private Type type;
 
     public SubjectDTO(Subject subject, Locale locale) {
-        this.id = subject.getId();
         if (locale.getLanguage().equals(new Locale("en").getLanguage())) {
             this.name = subject.getNameEn();
         } else {

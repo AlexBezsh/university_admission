@@ -23,14 +23,6 @@ public class AdminController {
         this.userService = userService;
     }
 
-    @GetMapping(value = "/users") //TODO delete there is no need for admin to obtain list of all existing users
-    public String getUsers(Model model, @PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC) Pageable pageable) {
-        log.info("getting all users");
-        model.addAttribute("users", userService.getUsers(pageable));
-        log.info("page with users was created");
-        return "users";
-    }
-
     @GetMapping(value = "/faculty/{facultyName}")
     public String getFaculty(Model model, @PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC) Pageable pageable) {
         model.addAttribute("users", userService.getUsers(pageable));
