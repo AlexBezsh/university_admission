@@ -1,5 +1,6 @@
 package com.bezshtanko.university_admission.service;
 
+import com.bezshtanko.university_admission.exception.DBException;
 import com.bezshtanko.university_admission.model.faculty.Faculty;
 import com.bezshtanko.university_admission.repository.FacultyRepository;
 import com.bezshtanko.university_admission.transfer.FacultyDTO;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 
 
 @Slf4j
@@ -25,6 +28,22 @@ public class FacultyService {
         return facultyRepository
                 .findAll(pageable)
                 .map(f -> new FacultyDTO(f, false));
+    }
+
+    public Faculty getFaculty(Long id) {
+        return facultyRepository.findById(id)
+                .orElseThrow(() -> new DBException("There is no faculty with id " + id + " in database"));
+    }
+
+    @Transactional
+    public void updateFaculty(Faculty faculty) {
+        facultyRepository.updateFaculty(faculty.getNameUa(),
+                faculty.getNameEn(),
+                faculty.getDescriptionUa(),
+                faculty.getDescriptionEn(),
+                faculty.getStateFundedPlaces(),
+                faculty.getContractPlaces(),
+                faculty.getId());
     }
 
     public Faculty saveNewFaculty(Faculty faculty) {

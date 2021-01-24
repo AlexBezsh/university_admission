@@ -44,14 +44,14 @@ public class AuthenticationController {
     }
 
     @PostMapping(value = "/login")
-    public String login(User user) {
+    public String login(@ModelAttribute("user") User user) {
         log.info("User is logging in: {}", user);
         try {
             userService.login(user);
         } catch (DBException e) {
             return "redirect:/login?error";
         }
-        return "redirect:/admin/users";
+        return "redirect:/faculties";
     }
 
     @GetMapping("/register")

@@ -57,30 +57,39 @@ public class FacultyController {
         return "redirect:/faculties";
     }
 
-    @GetMapping(value="/faculty/{facultyId}")
+    @GetMapping(value = "/faculty/{facultyId}")
     public String showFaculty(@PathVariable Long facultyId) {
         //TODO
         return "faculty";
     }
 
-    @GetMapping(value ="/faculty/{facultyId}/edit")
-    public String editFaculty(@PathVariable Long facultyId) {
-        //TODO
+    @GetMapping(value = "/faculty/{facultyId}/edit")
+    public String editFaculty(Model model, @PathVariable Long facultyId) {
+        model.addAttribute("faculty", facultyService.getFaculty(facultyId));
         return "edit_faculty_form";
     }
 
-    @GetMapping(value ="/faculty/{facultyId}/enroll")
+    @PostMapping(value = "/faculty/{facultyId}/edit")
+    public String saveEditedFaculty(@PathVariable Long facultyId, @Valid @ModelAttribute("faculty") Faculty faculty, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "edit_faculty_form";
+        }
+        faculty.setId(facultyId);
+        facultyService.updateFaculty(faculty);
+        return "redirect:/faculties";
+    }
+
+    @GetMapping(value = "/faculty/{facultyId}/enroll")
     public String enroll(@PathVariable Long facultyId) {
         //TODO
         return "enrollment_form";
     }
 
-    @GetMapping(value="/faculty/{facultyId}/delete")
+    @GetMapping(value = "/faculty/{facultyId}/delete")
     public String deleteFaculty(@PathVariable Long id) {
         facultyService.deleteFaculty(id);
         return "redirect:/faculties";
     }
-
 
 
 }
