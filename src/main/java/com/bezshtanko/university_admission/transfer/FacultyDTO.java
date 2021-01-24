@@ -2,13 +2,13 @@ package com.bezshtanko.university_admission.transfer;
 
 import com.bezshtanko.university_admission.model.enrollment.Enrollment;
 import com.bezshtanko.university_admission.model.faculty.Faculty;
-import com.bezshtanko.university_admission.model.faculty.Status;
+import com.bezshtanko.university_admission.model.faculty.FacultyStatus;
 import lombok.*;
+import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Getter
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class FacultyDTO {
 
     private String name;
-    private Status status;
+    private FacultyStatus status;
     private String description;
     private Integer stateFundedPlaces;
     private Integer contractPlaces;
@@ -28,8 +28,8 @@ public class FacultyDTO {
     private List<SubjectDTO> subjects;
     private List<Enrollment> enrollments;
 
-    public FacultyDTO(Faculty faculty, Locale locale, boolean includeEnrollments) {
-        if (locale.getLanguage().equals(new Locale("en").getLanguage())) {
+    public FacultyDTO(Faculty faculty, boolean includeEnrollments) {
+        if (LocaleContextHolder.getLocale().getLanguage().equals(new Locale("en").getLanguage())) {
             this.name = faculty.getNameEn();
             this.description = faculty.getDescriptionEn();
         } else {
@@ -43,7 +43,7 @@ public class FacultyDTO {
         this.subjects = faculty
                 .getSubjects()
                 .stream()
-                .map(s -> new SubjectDTO(s, locale))
+                .map(SubjectDTO::new)
                 .sorted(Comparator.comparing(SubjectDTO::getName))
                 .collect(Collectors.toList());
         if (includeEnrollments) {

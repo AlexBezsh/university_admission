@@ -44,12 +44,12 @@ public class User implements UserDetails {
 
     @Column(name = "status", columnDefinition = "ENUM('ACTIVE', 'BLOCKED', 'ENROLLED') NOT NULL DEFAULT 'ACTIVE'")
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private UserStatus status;
 
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @ElementCollection(targetClass = UserRole.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
-    private Set<Role> roles;
+    private Set<UserRole> roles;
 
     @Column(name = "city", nullable = false)
     @Size(min = 2, max = 100)

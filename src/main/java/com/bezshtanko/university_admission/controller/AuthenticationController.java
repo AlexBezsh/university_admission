@@ -1,7 +1,7 @@
 package com.bezshtanko.university_admission.controller;
 
-import com.bezshtanko.university_admission.model.user.Role;
-import com.bezshtanko.university_admission.model.user.Status;
+import com.bezshtanko.university_admission.model.user.UserRole;
+import com.bezshtanko.university_admission.model.user.UserStatus;
 import com.bezshtanko.university_admission.model.user.User;
 import com.bezshtanko.university_admission.exception.DBException;
 import com.bezshtanko.university_admission.service.UserService;
@@ -69,8 +69,8 @@ public class AuthenticationController {
             return "reg_form";
         }
         user.setRoles(new HashSet<>());
-        user.getRoles().add(Role.ENTRANT);
-        user.setStatus(Status.ACTIVE);
+        user.getRoles().add(UserRole.ENTRANT);
+        user.setStatus(UserStatus.ACTIVE);
         log.info("New user tries to register {}", user);
         userService.saveNewUser(user);
         return "redirect:/login";

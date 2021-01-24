@@ -26,7 +26,7 @@ public class Subject {
 
     @Column(name = "type", columnDefinition = "ENUM('SCHOOL', 'EXAM') NOT NULL")
     @Enumerated(EnumType.STRING)
-    private Type type;
+    private SubjectType type;
 
     @Column(name = "name_en", nullable = false)
     @Size(min = 2, max = 100)

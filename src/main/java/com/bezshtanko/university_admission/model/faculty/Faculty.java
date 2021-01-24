@@ -38,12 +38,14 @@ public class Faculty {
 
     @Column(name = "status", columnDefinition = "ENUM('ACTIVE', 'CLOSED') NOT NULL DEFAULT 'ACTIVE'")
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private FacultyStatus status;
 
     @Column(name = "description_en", nullable = false, columnDefinition = "TEXT")
+    @Size(min = 10)
     private String descriptionEn;
 
     @Column(name = "description_ua", nullable = false, columnDefinition = "TEXT")
+    @Size(min = 10)
     private String descriptionUa;
 
     @Column(name = "state_funded_places", nullable = false)

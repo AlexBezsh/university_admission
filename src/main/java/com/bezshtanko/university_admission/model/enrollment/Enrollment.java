@@ -35,7 +35,7 @@ public class Enrollment {
 
     @Column(name = "status", columnDefinition = "ENUM('NEW', 'APPROVED', 'FINALIZED') NOT NULL DEFAULT 'NEW'")
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private EnrollmentStatus status;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "mark")
     private Set<Mark> marks;

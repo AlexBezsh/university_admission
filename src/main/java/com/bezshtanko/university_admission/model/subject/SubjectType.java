@@ -1,6 +1,6 @@
 package com.bezshtanko.university_admission.model.subject;
 
-public enum Type {
+public enum SubjectType {
     SCHOOL,
     EXAM;
 }

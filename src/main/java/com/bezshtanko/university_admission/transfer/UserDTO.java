@@ -1,7 +1,7 @@
 package com.bezshtanko.university_admission.transfer;
 
-import com.bezshtanko.university_admission.model.user.Role;
-import com.bezshtanko.university_admission.model.user.Status;
+import com.bezshtanko.university_admission.model.user.UserRole;
+import com.bezshtanko.university_admission.model.user.UserStatus;
 import com.bezshtanko.university_admission.model.user.User;
 import lombok.*;
 
@@ -17,8 +17,8 @@ public class UserDTO {
 
     private String fullName;
     private String email;
-    private Status status;
-    private Set<Role> roles;
+    private UserStatus status;
+    private Set<UserRole> roles;
     private String city;
     private String region;
     private String education;

@@ -1,6 +1,6 @@
 package com.bezshtanko.university_admission.model.enrollment;
 
-public enum Status {
+public enum EnrollmentStatus {
     NEW,
     APPROVED,
     FINALIZED;

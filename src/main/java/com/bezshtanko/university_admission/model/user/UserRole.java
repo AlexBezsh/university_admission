@@ -3,7 +3,7 @@ package com.bezshtanko.university_admission.model.user;
 
 import org.springframework.security.core.GrantedAuthority;
 
-public enum Role implements GrantedAuthority {
+public enum UserRole implements GrantedAuthority {
     ADMIN,
     ENTRANT;
 
