@@ -35,7 +35,7 @@ public class Mark {
 
     @Column(name = "mark")
     @Min(0)
-    private Integer mark;
+    private Double mark;
 
     @Override
     public boolean equals(Object o) {

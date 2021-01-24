@@ -6,15 +6,15 @@ import com.bezshtanko.university_admission.model.user.User;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString
+@ToString(exclude = {"marks"})
 @Entity
 @Table(name = "enrollment",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "faculty_id"})})
@@ -38,14 +38,14 @@ public class Enrollment {
     private EnrollmentStatus status;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "mark")
-    private Set<Mark> marks;
+    private List<Mark> marks;
 
     @Transient
-    private Integer marksSum;
+    private Double marksSum;
 
     @PostLoad
     private void countMarksSum() {
-        marksSum = marks.stream().mapToInt(Mark::getMark).sum();
+        marksSum = marks.stream().mapToDouble(Mark::getMark).sum();
     }
 
     @Override

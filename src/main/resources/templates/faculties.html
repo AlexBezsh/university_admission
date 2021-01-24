@@ -33,7 +33,7 @@
 
     <div th:each="faculty : ${faculties.content}">
         <div class="card" style="margin-bottom: 10px; margin-top: 10px">
-            <h5 class="card-header" th:text="${faculty.name}"></h5>
+            <a class="card-header" th:href="@{'/faculty/' + ${faculty.id}}" th:text="${faculty.name}"></a>
             <div class="row" style="justify-content: space-between">
             </div>
             <div class="card-body">

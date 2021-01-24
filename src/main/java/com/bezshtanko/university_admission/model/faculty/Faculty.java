@@ -15,7 +15,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString
+@ToString(exclude = {"enrollments"})
 @Entity
 @Table(name = "faculty",
         uniqueConstraints = {

@@ -30,8 +30,12 @@ public class UserService {
                 .map(UserDTO::new);
     }
 
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new DBException("There is no such user in database"));
+    }
+
     public void login(User user) {
-        log.info(passwordEncoder.encode("Strong1"));
         userRepository.findByEmail(user.getEmail()).ifPresent(u -> {
             if (!passwordEncoder.matches(u.getPassword(), passwordEncoder.encode(user.getPassword()))) {
                 throw new DBException();

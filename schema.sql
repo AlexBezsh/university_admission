@@ -62,7 +62,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `university_admission`.`enrollment`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `university_admission`.`enrollment` (
-  `id` BIGINT NOT NULL,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `user_id` BIGINT NOT NULL,
   `faculty_id` BIGINT NOT NULL,
   `status` ENUM('NEW', 'APPROVED', 'FINALIZED') NOT NULL DEFAULT 'NEW',
@@ -127,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `university_admission`.`mark` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `enrollment_id` BIGINT NOT NULL,
   `subject_id` BIGINT NOT NULL,
-  `mark` INT NOT NULL,
+  `mark` DOUBLE NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `enrollment_subject_UNIQUE` (`enrollment_id` ASC, `subject_id` ASC) VISIBLE,
   INDEX `FK_mark_subject_idx` (`subject_id` ASC) INVISIBLE,
