@@ -12,17 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class PageController {
 
-    private FacultyService facultyService;
 
-    @Autowired
-    public PageController(FacultyService facultyService) {
-        this.facultyService = facultyService;
-    }
-
-    @GetMapping(value = "/faculties")
-    public String getFaculties(Model model, @PageableDefault(sort = {"stateFundedPlaces"}, direction = Sort.Direction.DESC) Pageable pageable) {
-        model.addAttribute("faculties", facultyService.getFaculties(pageable));
-        return "faculties";
-    }
 
 }

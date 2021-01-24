@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 @ToString
 public class FacultyDTO {
 
+    private Long id;
     private String name;
     private FacultyStatus status;
     private String description;
@@ -29,6 +30,7 @@ public class FacultyDTO {
     private List<Enrollment> enrollments;
 
     public FacultyDTO(Faculty faculty, boolean includeEnrollments) {
+        this.id = faculty.getId();
         if (LocaleContextHolder.getLocale().getLanguage().equals(new Locale("en").getLanguage())) {
             this.name = faculty.getNameEn();
             this.description = faculty.getDescriptionEn();
