@@ -16,8 +16,13 @@
                th:text="#{lang.en.label}"></a>
             </span>
         </div>
+        <div sec:authorize="hasAuthority('ENTRANT')">
+            <a class="btn btn-success" style="margin-right: 5px; margin-left: 20px;"
+               th:href="@{/profile}"
+               th:text="#{user.profile}"></a>
+        </div>
         <div sec:authorize="isAuthenticated()">
-            <a class="btn btn-success" th:href="@{/logout}" th:text="#{navbar.logout}"></a>
+            <a class="btn btn-primary" th:href="@{/logout}" th:text="#{navbar.logout}"></a>
         </div>
         <div sec:authorize="isAnonymous()">
             <a class="btn btn-success" th:href="@{/login}" th:text="#{login.button}"></a>

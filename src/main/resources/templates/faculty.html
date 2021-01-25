@@ -38,40 +38,27 @@
             <th scope="col" th:text="#{enrollment.user}"></th>
             <th scope="col" th:text="#{enrollment.marksSum}"></th>
             <th scope="col" th:text="#{enrollment.status}"></th>
+            <th sec:authorize="hasAuthority('ADMIN')" scope="col" th:text="#{enrollment.approve}"></th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="enrollment : ${faculty.enrollments}">
             <th scope="row" th:text="${enrollment.id}"></th>
-            <td th:text="${enrollment.user.fullName}"></td>
+            <td>
+                <a th:href="@{'/profile/' + ${enrollment.user.id}}" th:text="${enrollment.user.fullName}">
+                </a>
+            </td>
             <td th:text="${enrollment.marksSum}"></td>
             <td th:text="${enrollment.status}"></td>
+            <td sec:authorize="hasAuthority('ADMIN')">
+                    <a class="btn btn-success" style="margin-right: 5px; margin-left: 15px;"
+                       th:if="${enrollment.status == enrollment.status.NEW}"
+                       th:href="@{'/faculty/' + ${enrollment.faculty.id} + '/enrollment/' + ${enrollment.id} + '/approve'}"
+                       th:text="#{enrollment.approve}"></a>
+            </td>
         </tr>
         </tbody>
     </table>
 </div>
-
-<!--<div th:if="${faculties.totalElements gt 0}">
-    <nav aria-label="Pagination">
-        <ul class="pagination justify-content-center font-weight-medium">
-
-            <li class="page-item" th:classappend="${faculties.number eq 0} ? 'disabled'">
-                <a class="page-link" th:href="@{'?page=' + ${faculties.number - 1} + '&size=' + ${faculties.size}}"
-                   th:text="#{pageable.previous}"></a>
-            </li>
-
-            <li class="page-item disabled">
-                <a class="page-link" th:href="@{'?page=' + ${faculties.number} + '&size=' + ${faculties.size}}"
-                   th:text="${faculties.number + 1} + ' / ' + ${faculties.totalPages}"></a>
-            </li>
-
-            <li class="page-item" th:classappend="${(faculties.number + 1) eq faculties.totalPages} ? 'disabled'">
-                <a class="page-link" th:href="@{'?page=' + ${faculties.number + 1} + '&size=' + ${faculties.size}}"
-                   th:text="#{pageable.next}"></a>
-            </li>
-
-        </ul>
-    </nav>
-</div>-->
 </body>
 </html>

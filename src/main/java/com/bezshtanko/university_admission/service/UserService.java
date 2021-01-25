@@ -30,6 +30,11 @@ public class UserService {
                 .map(UserDTO::new);
     }
 
+    public User getUserById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new DBException("There is no such user in database"));
+    }
+
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new DBException("There is no such user in database"));

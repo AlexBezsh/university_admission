@@ -1,10 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title th:text="#{user.profile}"></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
 
+<header th:insert="fragments/bodyHeader.html">
+</header>
+<div style="margin-left: 30px; margin-right: 30px;">
+    <div class="card" style="margin-bottom: 10px; margin-top: 10px">
+        <a class="card-header" th:text="${user.fullName}"></a>
+        <div class="card-body">
+            <div class="list-view" style="width: 30rem">
+                <p class="card-text" style="margin-right: 10px; width: available"
+                   th:text="#{user.id} + ${': ' + user.id}"></p>
+                <p class="card-text" style="margin-right: 10px"
+                   th:text="#{user.status} + ${': ' + user.status}"></p>
+                <p class="card-text" style="margin-right: 10px"
+                   th:text="#{user.email} + ${': ' + user.email}"></p>
+                <p class="card-text" style="margin-right: 10px"
+                   th:text="#{user.city} + ${': ' + user.city}"></p>
+                <p class="card-text" style="margin-right: 10px"
+                   th:text="#{user.region} + ${': ' + user.region}"></p>
+                <p class="card-text" style="margin-right: 10px"
+                   th:text="#{user.education} + ${': ' + user.education}"></p>
+                <div>
+                    <div class="row" sec:authorize="hasAuthority('ADMIN')">
+                        <a class="btn btn-danger" style="margin-right: 5px; margin-left: 20px;"
+                           th:href="@{'/user/' + ${user.id} + '/block'}"
+                           th:text="#{user.block}"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

@@ -15,6 +15,7 @@ import java.util.Set;
 @ToString
 public class UserDTO {
 
+    private Long id;
     private String fullName;
     private String email;
     private UserStatus status;
@@ -25,6 +26,7 @@ public class UserDTO {
     private byte[] certificate_scan;
 
     public UserDTO(User user) {
+        this.id = user.getId();
         this.fullName = user.getFullName();
         this.email = user.getEmail();
         this.status = user.getStatus();

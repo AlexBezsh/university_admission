@@ -34,8 +34,6 @@
     <div th:each="faculty : ${faculties.content}">
         <div class="card" style="margin-bottom: 10px; margin-top: 10px">
             <a class="card-header" th:href="@{'/faculty/' + ${faculty.id}}" th:text="${faculty.name}"></a>
-            <div class="row" style="justify-content: space-between">
-            </div>
             <div class="card-body">
                 <div class="row" style="justify-content: space-between">
                     <div class="list-view" style="width: 30rem">
@@ -56,10 +54,7 @@
                                    th:text="#{faculty.enroll}"></a>
                             </div>
                             <div class="row" sec:authorize="hasAuthority('ADMIN')">
-                                <a class="btn btn-success" style="margin-right: 5px; margin-left: 20px;"
-                                   th:href="@{'/faculty/' + ${faculty.id}}"
-                                   th:text="#{show}"></a>
-                                <a class="btn btn-primary" style="margin-right: 5px; margin-left: 5px;"
+                                <a class="btn btn-primary" style="margin-right: 5px; margin-left: 25px;"
                                    th:href="@{'/faculty/' + ${faculty.id} + '/edit'}"
                                    th:text="#{edit}"></a>
                                 <a class="btn btn-danger" style="margin-right: 5px; margin-left: 5px;"
