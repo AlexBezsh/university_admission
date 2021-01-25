@@ -26,7 +26,6 @@
                            th:field="*{user}"
                     />
                 </label>
-
                 <label>
                     <input hidden
                            name="faculty"
@@ -34,20 +33,20 @@
                            th:field="*{faculty}"
                     />
                 </label>
-
                 <div th:each="mark,i : ${enrollment.marks}">
-                    <label>
+                    <p th:text="${' ' + mark.subject.nameEn + ' (' + mark.subject.type + ')'}"></p>
+                    <label >
                         <input hidden th:value="${mark.id}" th:field="*{marks[__${i.index}__].id}" />
-                    </label><br />
+                    </label>
                     <label>
                         <input hidden th:value="${mark.enrollment.id}"  th:field="*{marks[__${i.index}__].enrollment.id}" />
-                    </label><br />
+                    </label>
                     <label>
                         <input hidden th:value="${mark.subject.id}" th:field="*{marks[__${i.index}__].subject.id}" />
-                    </label><br />
+                    </label>
                     <label>
-                        <input type="number" th:field="*{marks[__${i.index}__].mark}" />
-                    </label><br />
+                        <input type="number" step="0.01" th:field="*{marks[__${i.index}__].mark}" />
+                    </label>
                 </div>
                 <button type="submit" class="btn btn-default" style="margin-top:30px" th:text="#{submit}">
                 </button>

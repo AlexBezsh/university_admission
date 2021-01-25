@@ -70,8 +70,8 @@ public class FacultyController {
     }
 
     @GetMapping(value = "/faculty/{facultyId}")
-    public String showFaculty(@PathVariable Long facultyId) {
-        //TODO
+    public String showFaculty(Model model, @PathVariable Long facultyId) {
+        model.addAttribute("faculty", facultyService.getFacultyWithEnrollments(facultyId));
         return "faculty";
     }
 

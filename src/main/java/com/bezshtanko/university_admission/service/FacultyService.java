@@ -35,6 +35,11 @@ public class FacultyService {
                 .orElseThrow(() -> new DBException("There is no faculty with id " + id + " in database"));
     }
 
+    public FacultyDTO getFacultyWithEnrollments(Long id) {
+        return facultyRepository.findById(id).map(f -> new FacultyDTO(f, true))
+                .orElseThrow(() -> new DBException("There is no faculty with id " + id + " in database"));
+    }
+
     @Transactional
     public void updateFaculty(Faculty faculty) {
         facultyRepository.updateFaculty(faculty.getNameUa(),

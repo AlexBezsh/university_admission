@@ -16,7 +16,7 @@ import java.util.Objects;
 @Builder
 @ToString
 @Entity
-@Table(name = "mark",
+@Table(name = "marks",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"enrollment_id", "subject_id"})})
 public class Mark {
 
@@ -25,12 +25,12 @@ public class Mark {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @NotNull
-    @ManyToOne(targetEntity = Enrollment.class, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "enrollment_id", nullable = false)
     private Enrollment enrollment;
 
-    @NotNull
-    @ManyToOne(targetEntity = Subject.class, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "subject_id", nullable = false)
     private Subject subject;
 
     @Column(name = "mark")

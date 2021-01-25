@@ -37,7 +37,7 @@ public class Enrollment {
     @Enumerated(EnumType.STRING)
     private EnrollmentStatus status;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "mark")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "enrollment")
     private List<Mark> marks;
 
     @Transient

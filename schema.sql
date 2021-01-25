@@ -9,7 +9,7 @@
 CREATE SCHEMA IF NOT EXISTS `university_admission` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
 USE `university_admission` ;
 
-DROP TABLE IF EXISTS `university_admission`.`mark` ;
+DROP TABLE IF EXISTS `university_admission`.`marks` ;
 DROP TABLE IF EXISTS `university_admission`.`enrollment` ;
 DROP TABLE IF EXISTS `university_admission`.`faculty_subjects` ;
 DROP TABLE IF EXISTS `university_admission`.`user_role` ;
@@ -123,7 +123,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 -- Table `university_admission`.`mark`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `university_admission`.`mark` (
+CREATE TABLE IF NOT EXISTS `university_admission`.`marks` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `enrollment_id` BIGINT NOT NULL,
   `subject_id` BIGINT NOT NULL,
