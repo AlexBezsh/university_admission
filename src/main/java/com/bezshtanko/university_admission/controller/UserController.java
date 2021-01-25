@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 public class UserController {
 
-    private UserService userService;
+    private final UserService userService;
 
     @Autowired
     public UserController(UserService userService) {
@@ -25,16 +25,16 @@ public class UserController {
         return "profile";
     }
 
-    @GetMapping(value = "/profile/{userId}")  //TODO security
+    @GetMapping(value = "/user/{userId}")
     public String showProfile(Model model, @PathVariable Long userId) {
         model.addAttribute("user", userService.getUserById(userId));
         return "profile";
     }
 
     @GetMapping(value = "/user/{userId}/block")
-    public String blockUser() {
-
-        return "redirect:"; //TODO
+    public String blockUser(@PathVariable Long userId) {
+        userService.blockUser(userId);
+        return "redirect:/faculties";
     }
     
 }

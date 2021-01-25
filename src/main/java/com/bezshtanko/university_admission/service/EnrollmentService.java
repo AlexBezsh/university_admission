@@ -21,7 +21,6 @@ public class EnrollmentService {
         return enrollmentRepository.save(enrollment);
     }
 
-    @Transactional
     public void setApproved(Long enrollmentId) {
         enrollmentRepository.setApproved(enrollmentId);
     }

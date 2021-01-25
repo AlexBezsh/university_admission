@@ -7,10 +7,13 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
+
 @Repository
 public interface FacultyRepository extends PagingAndSortingRepository<Faculty, Long> {
 
     @Modifying
+    @Transactional
     @Query(value = "UPDATE faculty SET name_ua = :nameUa, name_en = :nameEn, description_ua = :descriptionUa, description_en = :descriptionEn, state_funded_places = :stateFundedPlaces, contract_places = :contractPlaces WHERE id = :id",
             nativeQuery = true)
     void updateFaculty(@Param("nameUa") String nameUa,

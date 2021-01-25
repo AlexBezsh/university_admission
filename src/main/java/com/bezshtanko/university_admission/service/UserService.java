@@ -57,4 +57,8 @@ public class UserService {
         }
     }
 
+    public void blockUser(Long userId) {
+        userRepository.blockUser(userId);
+    }
+
 }

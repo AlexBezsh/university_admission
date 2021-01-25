@@ -40,7 +40,6 @@ public class FacultyService {
                 .orElseThrow(() -> new DBException("There is no faculty with id " + id + " in database"));
     }
 
-    @Transactional
     public void updateFaculty(Faculty faculty) {
         facultyRepository.updateFaculty(faculty.getNameUa(),
                 faculty.getNameEn(),

@@ -117,9 +117,11 @@ public class FacultyController {
         return "redirect:/faculties";
     }
 
+
+
     @GetMapping(value = "/faculty/{facultyId}/delete")
-    public String deleteFaculty(@PathVariable Long id) {
-        facultyService.deleteFaculty(id);
+    public String deleteFaculty(@PathVariable Long facultyId) {
+        facultyService.deleteFaculty(facultyId);
         return "redirect:/faculties";
     }
 

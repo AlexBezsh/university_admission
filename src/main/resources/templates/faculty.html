@@ -45,7 +45,7 @@
         <tr th:each="enrollment : ${faculty.enrollments}">
             <th scope="row" th:text="${enrollment.id}"></th>
             <td>
-                <a th:href="@{'/profile/' + ${enrollment.user.id}}" th:text="${enrollment.user.fullName}">
+                <a th:href="@{'/user/' + ${enrollment.user.id}}" th:text="${enrollment.user.fullName}">
                 </a>
             </td>
             <td th:text="${enrollment.marksSum}"></td>
