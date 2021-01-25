@@ -10,15 +10,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.util.List;
-
-
 @Slf4j
 @Service
 public class FacultyService {
 
-    private FacultyRepository facultyRepository;
+    private final FacultyRepository facultyRepository;
 
     @Autowired
     public FacultyService(FacultyRepository facultyRepository) {

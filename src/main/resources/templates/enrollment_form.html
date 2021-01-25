@@ -18,14 +18,6 @@
             <p><b th:text="#{faculty.enrollment.marks}"></b></p>
             <form style="margin-bottom: 30px" name="form" autocomplete="off" th:action="@{'/faculty/' + ${enrollment.faculty.id} + '/enroll'}"
                   th:object="${enrollment}" method="post">
-
-                <label>
-                    <input hidden
-                           name="user"
-                           th:value="${enrollment.user}"
-                           th:field="*{user}"
-                    />
-                </label>
                 <label>
                     <input hidden
                            name="faculty"

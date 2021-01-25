@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 public class EnrollmentController {
 
-    private EnrollmentService enrollmentService;
+    private final EnrollmentService enrollmentService;
 
     public EnrollmentController(EnrollmentService enrollmentService) {
         this.enrollmentService = enrollmentService;

@@ -127,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `university_admission`.`marks` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `enrollment_id` BIGINT NOT NULL,
   `subject_id` BIGINT NOT NULL,
-  `mark` DOUBLE NOT NULL,
+  `mark` DECIMAL(19, 2) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `enrollment_subject_UNIQUE` (`enrollment_id` ASC, `subject_id` ASC) VISIBLE,
   INDEX `FK_mark_subject_idx` (`subject_id` ASC) INVISIBLE,

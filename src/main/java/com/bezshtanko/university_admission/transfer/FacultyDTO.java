@@ -49,7 +49,11 @@ public class FacultyDTO {
                 .sorted(Comparator.comparing(SubjectDTO::getName))
                 .collect(Collectors.toList());
         if (includeEnrollments) {
-            this.enrollments = faculty.getEnrollments(); //TODO
+            this.enrollments = faculty
+                    .getEnrollments()
+                    .stream()
+                    .sorted(Comparator.comparing(Enrollment::getMarksSum))
+                    .collect(Collectors.toList());
         }
     }
 

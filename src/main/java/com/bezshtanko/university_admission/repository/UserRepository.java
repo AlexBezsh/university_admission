@@ -25,4 +25,10 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
             nativeQuery = true)
     void blockUser(@Param("id") Long id);
 
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE user SET status = 'ACTIVE' WHERE id = :id",
+            nativeQuery = true)
+    void unblockUser(@Param("id") Long id);
+
 }

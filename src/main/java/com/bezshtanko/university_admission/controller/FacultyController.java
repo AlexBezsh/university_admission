@@ -20,10 +20,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.jsf.FacesContextUtils;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -100,10 +100,9 @@ public class FacultyController {
         Faculty faculty = facultyService.getFaculty(facultyId);
         enrollment.setFaculty(faculty);
         enrollment.setMarks(faculty.getSubjects().stream()
-                .map(s -> new Mark(null, enrollment, s, 0d))
+                .map(s -> new Mark(null, enrollment, s, new BigDecimal("0")))
                 .collect(Collectors.toList()));
         model.addAttribute("enrollment", enrollment);
-        log.info("{}", enrollment);
         return "enrollment_form";
     }
 
@@ -118,11 +117,11 @@ public class FacultyController {
         return "redirect:/faculties";
     }
 
-    @GetMapping(value = "/faculty/{facultyId}/finalize") //TODO faculty - finalized, user - enrolled
+    @GetMapping(value = "/faculty/{facultyId}/finalize") //TODO only approved in final list, finally: faculty - finalized, user - enrolled
     public String createFinalList(Model model, @PathVariable Long facultyId) {
         Faculty faculty = facultyService.getFaculty(facultyId);
         List<Enrollment> finalList = faculty.getEnrollments();
-        finalList.sort(Comparator.comparingDouble(Enrollment::getMarksSum));
+        finalList.sort(Comparator.comparing(Enrollment::getMarksSum));
         int totalPlaces = Math.min(faculty.getTotalPlaces(), finalList.size());
         model.addAttribute("enrollments", finalList.subList(0, totalPlaces));
         return "final_list";

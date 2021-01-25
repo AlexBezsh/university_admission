@@ -6,7 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Getter
@@ -35,7 +35,7 @@ public class Mark {
 
     @Column(name = "mark")
     @Min(0)
-    private Double mark;
+    private BigDecimal mark;
 
     @Override
     public boolean equals(Object o) {

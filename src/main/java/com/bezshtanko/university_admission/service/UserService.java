@@ -1,13 +1,10 @@
 package com.bezshtanko.university_admission.service;
 
-import com.bezshtanko.university_admission.transfer.UserDTO;
-import com.bezshtanko.university_admission.model.user.User;
 import com.bezshtanko.university_admission.exception.DBException;
+import com.bezshtanko.university_admission.model.user.User;
 import com.bezshtanko.university_admission.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,12 +19,6 @@ public class UserService {
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-    }
-
-    public Page<UserDTO> getUsers(Pageable pageable) {
-        return userRepository
-                .findAll(pageable)
-                .map(UserDTO::new);
     }
 
     public User getUserById(Long id) {
@@ -59,6 +50,10 @@ public class UserService {
 
     public void blockUser(Long userId) {
         userRepository.blockUser(userId);
+    }
+
+    public void unblockUser(Long userId) {
+        userRepository.unblockUser(userId);
     }
 
 }

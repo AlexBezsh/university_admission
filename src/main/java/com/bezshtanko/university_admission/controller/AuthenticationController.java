@@ -45,7 +45,6 @@ public class AuthenticationController {
 
     @PostMapping(value = "/login")
     public String login(@ModelAttribute("user") User user) {
-        log.info("User is logging in: {}", user);
         try {
             userService.login(user);
         } catch (DBException e) {
@@ -71,7 +70,6 @@ public class AuthenticationController {
         user.setRoles(new HashSet<>());
         user.getRoles().add(UserRole.ENTRANT);
         user.setStatus(UserStatus.ACTIVE);
-        log.info("New user tries to register {}", user);
         userService.saveNewUser(user);
         return "redirect:/login";
     }

@@ -34,7 +34,13 @@ public class UserController {
     @GetMapping(value = "/user/{userId}/block")
     public String blockUser(@PathVariable Long userId) {
         userService.blockUser(userId);
-        return "redirect:/faculties";
+        return "redirect:/user/" + userId;
+    }
+
+    @GetMapping(value = "/user/{userId}/unblock")
+    public String unblockUser(@PathVariable Long userId) {
+        userService.unblockUser(userId);
+        return "redirect:/user/" + userId;
     }
     
 }

@@ -6,6 +6,7 @@ import com.bezshtanko.university_admission.model.user.User;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
@@ -41,11 +42,11 @@ public class Enrollment {
     private List<Mark> marks;
 
     @Transient
-    private Double marksSum;
+    private BigDecimal marksSum;
 
     @PostLoad
     private void countMarksSum() {
-        marksSum = marks.stream().mapToDouble(Mark::getMark).sum();
+        marksSum = marks.stream().map(Mark::getMark).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     @Override

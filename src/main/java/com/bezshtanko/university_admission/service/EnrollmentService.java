@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class EnrollmentService {
 
-    private EnrollmentRepository enrollmentRepository;
+    private final EnrollmentRepository enrollmentRepository;
 
     @Autowired
     public EnrollmentService(EnrollmentRepository enrollmentRepository) {

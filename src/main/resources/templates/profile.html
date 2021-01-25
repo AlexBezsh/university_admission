@@ -15,8 +15,6 @@
         <a class="card-header" th:text="${user.fullName}"></a>
         <div class="card-body">
             <div class="list-view" style="width: 30rem">
-                <p class="card-text" style="margin-right: 10px; width: available"
-                   th:text="#{user.id} + ${': ' + user.id}"></p>
                 <p class="card-text" style="margin-right: 10px"
                    th:text="#{user.status} + ${': ' + user.status}"></p>
                 <p class="card-text" style="margin-right: 10px"
@@ -30,8 +28,13 @@
                 <div>
                     <div class="row" sec:authorize="hasAuthority('ADMIN')">
                         <a class="btn btn-danger" style="margin-right: 5px; margin-left: 20px;"
+                           th:if="${user.status == user.status.ACTIVE}"
                            th:href="@{'/user/' + ${user.id} + '/block'}"
                            th:text="#{user.block}"></a>
+                        <a class="btn btn-warning" style="margin-right: 5px; margin-left: 20px;"
+                           th:if="${user.status == user.status.BLOCKED}"
+                           th:href="@{'/user/' + ${user.id} + '/unblock'}"
+                           th:text="#{user.unblock}"></a>
                     </div>
                 </div>
             </div>
