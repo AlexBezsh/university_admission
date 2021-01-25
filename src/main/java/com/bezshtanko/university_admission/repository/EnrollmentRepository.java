@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository
 public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
@@ -29,5 +30,7 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
                        @Param("stateFundedPlaces") Integer stateFundedPlaces,
                        @Param("contractPlaces") Integer contractPlaces,
                        @Param("id") Long id);
+
+    List<Enrollment> findAllByFacultyId(Long facultyId);
 
 }

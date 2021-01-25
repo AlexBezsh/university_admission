@@ -63,9 +63,8 @@ public class User implements UserDetails {
     @Size(min = 2, max = 250)
     private String education;
 
-    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
-    @JoinColumn(name = "faculty_id")
-    private List<Enrollment> enrollments;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", orphanRemoval = true)
+    private Set<Enrollment> enrollments;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

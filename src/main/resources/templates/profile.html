@@ -37,6 +37,31 @@
             </div>
         </div>
     </div>
+
+    <h3 th:if="${!user.enrollments.empty}" class="page-header" style="text-align: center; margin-top: 30px; margin-bottom: 30px" th:text="#{user.enrollments}"></h3>
+
+    <table class="table" th:if="${!user.enrollments.empty}">
+        <thead>
+        <tr>
+            <th scope="col" th:text="#{enrollment.id}"></th>
+            <th scope="col" th:text="#{enrollment.faculty}"></th>
+            <th scope="col" th:text="#{enrollment.marksSum}"></th>
+            <th scope="col" th:text="#{enrollment.status}"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="enrollment : ${user.enrollments}">
+            <th scope="row" th:text="${enrollment.id}"></th>
+            <td>
+                <a th:href="@{'/faculty/' + ${enrollment.faculty.id}}" th:text="${enrollment.faculty.nameEn}">
+                </a>
+            </td>
+            <td th:text="${enrollment.marksSum}"></td>
+            <td th:text="${enrollment.status}"></td>
+        </tr>
+        </tbody>
+    </table>
+
 </div>
 </body>
 </html>

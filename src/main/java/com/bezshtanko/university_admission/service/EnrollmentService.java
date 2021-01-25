@@ -5,7 +5,7 @@ import com.bezshtanko.university_admission.repository.EnrollmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class EnrollmentService {
@@ -23,6 +23,10 @@ public class EnrollmentService {
 
     public void setApproved(Long enrollmentId) {
         enrollmentRepository.setApproved(enrollmentId);
+    }
+
+    public List<Enrollment> getAllEnrollments(Long facultyId) {
+        return enrollmentRepository.findAllByFacultyId(facultyId);
     }
 
 }

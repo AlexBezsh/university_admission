@@ -23,7 +23,6 @@ public class UserDTO {
     private String city;
     private String region;
     private String education;
-    private byte[] certificate_scan;
 
     public UserDTO(User user) {
         this.id = user.getId();

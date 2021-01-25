@@ -20,9 +20,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.jsf.FacesContextUtils;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -112,18 +115,23 @@ public class FacultyController {
         enrollmentService.saveNewEnrollment(enrollment);
         enrollment.getMarks().forEach(m -> m.setEnrollment(enrollment));
         markService.saveAll(enrollment.getMarks());
-        log.info("{}", enrollment.getMarks());
-        log.info("{}", enrollment);
         return "redirect:/faculties";
     }
 
-
+    @GetMapping(value = "/faculty/{facultyId}/finalize") //TODO faculty - finalized, user - enrolled
+    public String createFinalList(Model model, @PathVariable Long facultyId) {
+        Faculty faculty = facultyService.getFaculty(facultyId);
+        List<Enrollment> finalList = faculty.getEnrollments();
+        finalList.sort(Comparator.comparingDouble(Enrollment::getMarksSum));
+        int totalPlaces = Math.min(faculty.getTotalPlaces(), finalList.size());
+        model.addAttribute("enrollments", finalList.subList(0, totalPlaces));
+        return "final_list";
+    }
 
     @GetMapping(value = "/faculty/{facultyId}/delete")
     public String deleteFaculty(@PathVariable Long facultyId) {
         facultyService.deleteFaculty(facultyId);
         return "redirect:/faculties";
     }
-
 
 }
