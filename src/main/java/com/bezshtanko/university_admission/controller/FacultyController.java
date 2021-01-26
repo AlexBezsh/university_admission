@@ -6,6 +6,7 @@ import com.bezshtanko.university_admission.model.faculty.Faculty;
 import com.bezshtanko.university_admission.model.faculty.FacultyStatus;
 import com.bezshtanko.university_admission.model.mark.Mark;
 import com.bezshtanko.university_admission.model.user.User;
+import com.bezshtanko.university_admission.model.user.UserStatus;
 import com.bezshtanko.university_admission.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,11 @@ public class FacultyController {
     private final MarkService markService;
 
     @Autowired
-    public FacultyController(FacultyService facultyService, SubjectService subjectService, EnrollmentService enrollmentService, UserService userService, MarkService markService) {
+    public FacultyController(FacultyService facultyService,
+                             SubjectService subjectService,
+                             EnrollmentService enrollmentService,
+                             UserService userService,
+                             MarkService markService) {
         this.facultyService = facultyService;
         this.subjectService = subjectService;
         this.enrollmentService = enrollmentService;
@@ -117,11 +122,14 @@ public class FacultyController {
         return "redirect:/faculties";
     }
 
-    @GetMapping(value = "/faculty/{facultyId}/finalize") //TODO only approved in final list, finally: faculty - finalized, user - enrolled
+    @GetMapping(value = "/faculty/{facultyId}/finalize") //TODO finally: faculty - finalized, user - enrolled
     public String createFinalList(Model model, @PathVariable Long facultyId) {
         Faculty faculty = facultyService.getFaculty(facultyId);
-        List<Enrollment> finalList = faculty.getEnrollments();
-        finalList.sort(Comparator.comparing(Enrollment::getMarksSum));
+        List<Enrollment> finalList = faculty.getEnrollments()
+                .stream()
+                .filter(e -> (e.getStatus() == EnrollmentStatus.APPROVED) && (e.getUser().getStatus() == UserStatus.ACTIVE))
+                .sorted(Comparator.comparing(Enrollment::getMarksSum))
+                .collect(Collectors.toList());
         int totalPlaces = Math.min(faculty.getTotalPlaces(), finalList.size());
         model.addAttribute("enrollments", finalList.subList(0, totalPlaces));
         return "final_list";
