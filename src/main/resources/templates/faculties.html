@@ -18,16 +18,16 @@
     <div style="margin-left: 45px;">
         <b style="font-size: 18px;" th:text="#{faculties.sort.label}"></b>
         <a class="btn btn-default" style="margin-bottom: 5px;"
-           th:href="@{'/faculties?sort=name' + ${#strings.capitalize(#locale)}}"
+           th:href="@{'?sort=name' + ${#strings.capitalize(#locale)}}"
            th:text="#{faculties.sort.a-z}"></a>
         <a class="btn btn-default" style="margin-bottom: 5px;"
-           th:href="@{'/faculties?sort=name' + ${#strings.capitalize(#locale)} + ',desc'}"
+           th:href="@{'?sort=name' + ${#strings.capitalize(#locale)} + ',desc'}"
            th:text="#{faculties.sort.z-a}"></a>
         <a class="btn btn-default" style="margin-bottom: 5px;"
-           th:href="@{'/faculties?sort=stateFundedPlaces,desc'}"
+           th:href="@{'?sort=stateFundedPlaces,desc'}"
            th:text="#{faculties.sort.stateFundedPlaces}"></a>
         <a class="btn btn-default" style="margin-bottom: 5px;"
-           th:href="@{'/faculties?sort=contractPlaces,desc'}"
+           th:href="@{'?sort=contractPlaces,desc'}"
            th:text="#{faculties.sort.contractPlaces}"></a>
     </div>
     <div sec:authorize="hasAuthority('ADMIN')">
@@ -93,22 +93,22 @@
         <ul class="pagination justify-content-center font-weight-medium">
 
             <li class="page-item" th:classappend="${faculties.number eq 0} ? 'disabled'">
-                <a class="page-link" th:href="@{'?page=' + ${faculties.number - 1} + '&size=' + ${faculties.size}}"
+                <a class="page-link" th:href="@{'?page=' + ${faculties.number - 1} + '&size=' + ${faculties.size} + '&sort=' + ${faculties.sort.toString().replace(': ', ',')}}"
                    th:text="#{pageable.previous}"></a>
             </li>
 
             <li class="page-item disabled">
-                <a class="page-link" th:href="@{'?page=' + ${faculties.number} + '&size=' + ${faculties.size}}"
+                <a class="page-link" th:href="@{'?page=' + ${faculties.number} + '&size=' + ${faculties.size} + '&sort=' + ${faculties.sort.toString().replace(': ', ',')}}"
                    th:text="${faculties.number + 1} + ' / ' + ${faculties.totalPages}"></a>
             </li>
 
             <li class="page-item" th:classappend="${(faculties.number + 1) eq faculties.totalPages} ? 'disabled'">
-                <a class="page-link" th:href="@{'?page=' + ${faculties.number + 1} + '&size=' + ${faculties.size}}"
+                <a class="page-link" th:href="@{'?page=' + ${faculties.number + 1} + '&size=' + ${faculties.size} + '&sort=' + ${faculties.sort.toString().replace(': ', ',')}}"
                    th:text="#{pageable.next}"></a>
             </li>
-
         </ul>
     </nav>
 </div>
+
 </body>
 </html>

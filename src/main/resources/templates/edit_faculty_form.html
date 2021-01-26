@@ -67,6 +67,7 @@
                                th:errors="*{stateFundedPlaces}"></span>
                     <input id="stateFundedPlaces"
                            type="number"
+                           min="0"
                            class="form-control"
                            th:field="*{stateFundedPlaces}"
                            th:default="${faculty.stateFundedPlaces}"
@@ -78,6 +79,7 @@
                                th:errors="*{contractPlaces}"></span>
                     <input id="contractPlaces"
                            type="number"
+                           min="0"
                            class="form-control"
                            th:field="*{contractPlaces}"
                            th:default="${faculty.contractPlaces}"
