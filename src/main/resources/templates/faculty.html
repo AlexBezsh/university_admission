@@ -16,9 +16,8 @@
 
 <div class="row" style="justify-content: space-between">
     <div>
-        <!--        сортировки-->
     </div>
-    <div sec:authorize="hasAuthority('ADMIN')">
+    <div sec:authorize="hasAuthority('ADMIN')" th:if="${faculty.status == faculty.status.ACTIVE}">
         <a class="btn btn-secondary" style="margin-right: 45px; margin-left: 5px; margin-top: 5px; margin-bottom: 5px;"
            th:href="@{'/faculty/' + ${faculty.id} + '/finalize'}"
            th:text="#{faculty.finalize}"></a>
@@ -54,13 +53,12 @@
             <td th:text="${enrollment.user.status}"></td>
             <td th:text="${enrollment.marksSum}"></td>
             <td th:text="${enrollment.status}"></td>
-            <td sec:authorize="hasAuthority('ADMIN')"
-                th:if="${enrollment.user.status == enrollment.user.status.ACTIVE}">
+            <td sec:authorize="hasAuthority('ADMIN')">
                 <a class="btn btn-success" style="margin-right: 5px; margin-left: 15px;"
-                   th:if="${enrollment.status == enrollment.status.NEW}"
+                   th:if="${(enrollment.status == enrollment.status.NEW) && (enrollment.user.status == enrollment.user.status.ACTIVE)}"
                    th:href="@{'/faculty/' + ${enrollment.faculty.id} + '/enrollment/' + ${enrollment.id} + '/approve'}"
                    th:text="#{enrollment.approve}"></a>
-                <b th:if="${!(enrollment.status == enrollment.status.NEW)}">-</b>
+                <b th:if="${(enrollment.status != enrollment.status.NEW) || (enrollment.user.status != enrollment.user.status.ACTIVE)}">-</b>
             </td>
         </tr>
         </tbody>

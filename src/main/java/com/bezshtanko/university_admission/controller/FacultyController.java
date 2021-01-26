@@ -54,7 +54,12 @@ public class FacultyController {
 
     @GetMapping(value = "/faculties")
     public String getFaculties(Model model,
-                               @PageableDefault(value = 3, sort = {"stateFundedPlaces"}, direction = Sort.Direction.DESC) Pageable pageable) {
+                               @PageableDefault(value = 3, sort = {"stateFundedPlaces"}, direction = Sort.Direction.DESC) Pageable pageable,
+                               @AuthenticationPrincipal User user) {
+        if (user.getStatus() == UserStatus.ENROLLED) {
+            return "congratulation";
+        }
+
         model.addAttribute("faculties", facultyService.getFaculties(pageable));
         return "faculties";
     }
@@ -123,17 +128,32 @@ public class FacultyController {
         return "redirect:/faculties";
     }
 
-    @GetMapping(value = "/faculty/{facultyId}/finalize") //TODO finally: faculty - finalized, user - enrolled
+    @GetMapping(value = "/faculty/{facultyId}/finalize")
     public String createFinalList(Model model, @PathVariable Long facultyId) {
         Faculty faculty = facultyService.getFaculty(facultyId);
-        List<Enrollment> finalList = faculty.getEnrollments()
+        if (faculty.getStatus() == FacultyStatus.CLOSED) {
+            return "redirect:/faculty/" + facultyId;
+        }
+
+        List<Enrollment> enrollments = faculty.getEnrollments()
                 .stream()
                 .filter(e -> (e.getStatus() == EnrollmentStatus.APPROVED) && (e.getUser().getStatus() == UserStatus.ACTIVE))
-                .sorted(Comparator.comparing(Enrollment::getMarksSum))
+                .sorted(Comparator.comparing(Enrollment::getMarksSum).reversed())
+                .limit(faculty.getTotalPlaces())
                 .collect(Collectors.toList());
-        int totalPlaces = Math.min(faculty.getTotalPlaces(), finalList.size());
-        model.addAttribute("enrollments", finalList.subList(0, totalPlaces));
+        normalizeFinalList(faculty, enrollments);
+        model.addAttribute("enrollments", enrollments);
         return "final_list";
+    }
+
+    @Transactional
+    void normalizeFinalList(Faculty faculty, List<Enrollment> enrollments) {
+        facultyService.setClosed(faculty);
+        userService.setEnrolled(enrollments
+                .stream()
+                .map(Enrollment::getUser)
+                .collect(Collectors.toList()));
+        enrollmentService.setFinalized(enrollments);
     }
 
     @GetMapping(value = "/faculty/{facultyId}/delete")

@@ -2,6 +2,7 @@ package com.bezshtanko.university_admission.service;
 
 import com.bezshtanko.university_admission.exception.DBException;
 import com.bezshtanko.university_admission.model.faculty.Faculty;
+import com.bezshtanko.university_admission.model.faculty.FacultyStatus;
 import com.bezshtanko.university_admission.repository.FacultyRepository;
 import com.bezshtanko.university_admission.transfer.FacultyDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -49,6 +50,10 @@ public class FacultyService {
 
     public Faculty saveNewFaculty(Faculty faculty) {
         return facultyRepository.save(faculty);
+    }
+
+    public void setClosed(Faculty faculty) {
+        facultyRepository.setClosed(faculty.getId());
     }
 
     public void deleteFaculty(Long id) {

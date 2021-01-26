@@ -23,4 +23,10 @@ public interface FacultyRepository extends PagingAndSortingRepository<Faculty, L
                        @Param("stateFundedPlaces") Integer stateFundedPlaces,
                        @Param("contractPlaces") Integer contractPlaces,
                        @Param("id") Long id);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE faculty SET status = 'CLOSED' WHERE id = :id",
+            nativeQuery = true)
+    void setClosed(@Param("id") Long id);
 }

@@ -2,11 +2,15 @@ package com.bezshtanko.university_admission.service;
 
 import com.bezshtanko.university_admission.exception.DBException;
 import com.bezshtanko.university_admission.model.user.User;
+import com.bezshtanko.university_admission.model.user.UserStatus;
 import com.bezshtanko.university_admission.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -54,6 +58,13 @@ public class UserService {
 
     public void unblockUser(Long userId) {
         userRepository.unblockUser(userId);
+    }
+
+    public void setEnrolled(List<User> users) {
+        userRepository.setEnrolled(users
+                .stream()
+                .map(User::getId)
+                .collect(Collectors.toList()));
     }
 
 }

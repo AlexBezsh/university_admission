@@ -59,7 +59,7 @@
                            th:text="#{faculty.contractPlaces} + ${': ' + faculty.contractPlaces}"></p>
                         <p class="card-text" style="margin-right: 10px"
                            th:text="#{faculty.totalPlaces} + ${': ' + faculty.totalPlaces}"></p>
-                        <div>
+                        <div th:if="${faculty.status == faculty.status.ACTIVE}">
                             <div sec:authorize="hasAuthority('ENTRANT')">
                                 <a class="btn btn-success" style="margin-right: 5px; margin-left: 15px; margin-bottom: 5px;"
                                    th:href="@{'/faculty/' + ${faculty.id} + '/enroll'}"

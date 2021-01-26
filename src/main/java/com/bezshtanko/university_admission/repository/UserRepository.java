@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -31,4 +32,9 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
             nativeQuery = true)
     void unblockUser(@Param("id") Long id);
 
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE user SET status = 'ENROLLED' WHERE id IN (:ids)",
+            nativeQuery = true)
+    void setEnrolled(@Param("ids") List<Long> ids);
 }

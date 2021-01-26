@@ -21,6 +21,12 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
 
     @Modifying
     @Transactional
+    @Query(value = "UPDATE enrollment SET status = 'FINALIZED' WHERE id IN (:ids)",
+            nativeQuery = true)
+    void setFinalized(@Param("ids") List<Long> ids);
+
+    @Modifying
+    @Transactional
     @Query(value = "UPDATE faculty SET name_ua = :nameUa, name_en = :nameEn, description_ua = :descriptionUa, description_en = :descriptionEn, state_funded_places = :stateFundedPlaces, contract_places = :contractPlaces WHERE id = :id",
             nativeQuery = true)
     void updateFaculty(@Param("nameUa") String nameUa,
