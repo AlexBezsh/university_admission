@@ -53,7 +53,7 @@ public class FacultyController {
     }
 
     @GetMapping(value = "/faculties")
-    public String getFaculties(Model model, @PageableDefault(sort = {"stateFundedPlaces"}, direction = Sort.Direction.DESC) Pageable pageable) {
+    public String getFaculties(Model model, @PageableDefault(value = 3, sort = {"stateFundedPlaces"}, direction = Sort.Direction.DESC) Pageable pageable) {
         model.addAttribute("faculties", facultyService.getFaculties(pageable));
         return "faculties";
     }

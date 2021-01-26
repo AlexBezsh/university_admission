@@ -15,11 +15,23 @@
     th:text="#{faculties.header}"></h3>
 
 <div class="row" style="justify-content: space-between">
-    <div>
-        <!--        сортировки-->
+    <div style="margin-left: 45px;">
+        <b style="font-size: 18px;" th:text="#{faculties.sort.label}"></b>
+        <a class="btn btn-default" style="margin-bottom: 5px;"
+           th:href="@{'/faculties?sort=name' + ${#strings.capitalize(#locale)}}"
+           th:text="#{faculties.sort.a-z}"></a>
+        <a class="btn btn-default" style="margin-bottom: 5px;"
+           th:href="@{'/faculties?sort=name' + ${#strings.capitalize(#locale)} + ',desc'}"
+           th:text="#{faculties.sort.z-a}"></a>
+        <a class="btn btn-default" style="margin-bottom: 5px;"
+           th:href="@{'/faculties?sort=stateFundedPlaces,desc'}"
+           th:text="#{faculties.sort.stateFundedPlaces}"></a>
+        <a class="btn btn-default" style="margin-bottom: 5px;"
+           th:href="@{'/faculties?sort=contractPlaces,desc'}"
+           th:text="#{faculties.sort.contractPlaces}"></a>
     </div>
     <div sec:authorize="hasAuthority('ADMIN')">
-        <a class="btn btn-secondary" style="margin-right: 45px; margin-left: 5px; margin-top: 5px; margin-bottom: 5px;"
+        <a class="btn btn-secondary" style="margin-right: 45px; margin-left: 45px; margin-top: 5px; margin-bottom: 5px;"
            th:href="@{'/faculty/new'}"
            th:text="#{faculty.new}"></a>
     </div>
@@ -49,15 +61,15 @@
                            th:text="#{faculty.totalPlaces} + ${': ' + faculty.totalPlaces}"></p>
                         <div>
                             <div sec:authorize="hasAuthority('ENTRANT')">
-                                <a class="btn btn-success" style="margin-right: 5px; margin-left: 15px;"
+                                <a class="btn btn-success" style="margin-right: 5px; margin-left: 15px; margin-bottom: 5px;"
                                    th:href="@{'/faculty/' + ${faculty.id} + '/enroll'}"
                                    th:text="#{faculty.enroll}"></a>
                             </div>
                             <div class="row" sec:authorize="hasAuthority('ADMIN')">
-                                <a class="btn btn-primary" style="margin-right: 5px; margin-left: 25px;"
+                                <a class="btn btn-primary" style="margin-right: 5px; margin-left: 25px; margin-bottom: 5px;"
                                    th:href="@{'/faculty/' + ${faculty.id} + '/edit'}"
                                    th:text="#{edit}"></a>
-                                <a class="btn btn-danger" style="margin-right: 5px; margin-left: 5px;"
+                                <a class="btn btn-danger" style="margin-right: 5px; margin-left: 5px; margin-bottom: 5px;"
                                    th:href="@{'/faculty/' + ${faculty.id} + '/delete'}"
                                    th:text="#{delete}"></a>
                             </div>
