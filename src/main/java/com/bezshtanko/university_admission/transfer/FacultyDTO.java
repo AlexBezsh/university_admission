@@ -49,13 +49,11 @@ public class FacultyDTO {
                 .sorted(Comparator.comparing(SubjectDTO::getName))
                 .collect(Collectors.toList());
         if (includeEnrollments) { //TODO this sorting is not working - refactor - move to service layer
-            Comparator<Enrollment> comparator;
-            if (status == FacultyStatus.ACTIVE) {
-                comparator = Comparator.comparing(Enrollment::getStatus);
-            } else {
-                comparator = Comparator.comparing(Enrollment::getStatus).reversed();
+            Comparator<Enrollment> comparator = Comparator.comparing(Enrollment::getStatus);
+            if (status != FacultyStatus.ACTIVE) {
+                comparator = comparator.reversed();
             }
-            comparator.thenComparing(Comparator.comparing(Enrollment::getMarksSum));
+            comparator.thenComparing(Comparator.comparing(Enrollment::getMarksSum).reversed());
 
             this.enrollments = faculty
                     .getEnrollments()

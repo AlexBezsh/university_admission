@@ -34,7 +34,14 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "UPDATE user SET status = 'ENROLLED' WHERE id IN (:ids)",
+    @Query(value = "UPDATE user SET status = 'ENROLLED_CONTRACT' WHERE id IN (:ids)",
             nativeQuery = true)
-    void setEnrolled(@Param("ids") List<Long> ids);
+    void setEnrolledContract(@Param("ids") List<Long> ids);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE user SET status = 'ENROLLED_STATE_FUNDED' WHERE id IN (:ids)",
+            nativeQuery = true)
+    void setEnrolledStateFunded(@Param("ids") List<Long> ids);
+
 }

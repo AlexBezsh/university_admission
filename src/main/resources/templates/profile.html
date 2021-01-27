@@ -53,7 +53,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="enrollment : ${user.enrollments}">
+        <tr th:class="${enrollment.status == enrollment.status.FINALIZED} ? 'table-success' : ''"
+                th:each="enrollment : ${user.enrollments}">
             <th scope="row" th:text="${enrollment.id}"></th>
             <td>
                 <a th:href="@{'/faculty/' + ${enrollment.faculty.id}}" th:text="${enrollment.faculty.nameEn}">
@@ -64,7 +65,6 @@
         </tr>
         </tbody>
     </table>
-
 </div>
 </body>
 </html>

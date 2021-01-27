@@ -56,7 +56,8 @@ public class FacultyController {
     public String getFaculties(Model model,
                                @PageableDefault(value = 3, sort = {"stateFundedPlaces"}, direction = Sort.Direction.DESC) Pageable pageable,
                                @AuthenticationPrincipal User user) {
-        if (user.getStatus() == UserStatus.ENROLLED) {
+        if (user.getStatus() == UserStatus.ENROLLED_CONTRACT || user.getStatus() == UserStatus.ENROLLED_STATE_FUNDED) {
+            model.addAttribute("status", user.getStatus());
             return "congratulation";
         }
 
@@ -85,7 +86,7 @@ public class FacultyController {
 
     @GetMapping(value = "/faculty/{facultyId}")
     public String showFaculty(Model model, @PathVariable Long facultyId) {
-        model.addAttribute("faculty", facultyService.getFacultyWithEnrollments(facultyId));
+        model.addAttribute("faculty", facultyService.getFacultyWithEnrollments(facultyId)); //TODO enrollments must be sorted by status reversed and than total mark reversed
         return "faculty";
     }
 
@@ -141,19 +142,29 @@ public class FacultyController {
                 .sorted(Comparator.comparing(Enrollment::getMarksSum).reversed())
                 .limit(faculty.getTotalPlaces())
                 .collect(Collectors.toList());
-        normalizeFinalList(faculty, enrollments);
+
         model.addAttribute("enrollments", enrollments);
+        if (!enrollments.isEmpty()) {
+            normalizeFinalList(faculty, enrollments);
+        }
         return "final_list";
     }
 
     @Transactional
     void normalizeFinalList(Faculty faculty, List<Enrollment> enrollments) {
         facultyService.setClosed(faculty);
-        userService.setEnrolled(enrollments
+        enrollmentService.setFinalized(enrollments);
+        List<User> users = enrollments
                 .stream()
                 .map(Enrollment::getUser)
-                .collect(Collectors.toList()));
-        enrollmentService.setFinalized(enrollments);
+                .collect(Collectors.toList());
+        int stateFundedStudentsNum = Math.min(faculty.getStateFundedPlaces(), users.size());
+        if (stateFundedStudentsNum != 0) {
+            userService.setEnrolledStateFunded(users.subList(0, stateFundedStudentsNum));
+        }
+        if (stateFundedStudentsNum < users.size()) {
+            userService.setEnrolledContract(users.subList(stateFundedStudentsNum, Math.min(faculty.getTotalPlaces(), users.size())));
+        }
     }
 
     @GetMapping(value = "/faculty/{facultyId}/delete")

@@ -42,7 +42,8 @@ public class User implements UserDetails {
     @Pattern(regexp = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+).{6,}")
     private String password;
 
-    @Column(name = "status", columnDefinition = "ENUM('ACTIVE', 'BLOCKED', 'ENROLLED') NOT NULL DEFAULT 'ACTIVE'")
+    @Column(name = "status",
+            columnDefinition = "ENUM('ACTIVE', 'BLOCKED', 'ENROLLED_CONTRACT', 'ENROLLED_STATE_FUNDED') NOT NULL DEFAULT 'ACTIVE'")
     @Enumerated(EnumType.STRING)
     private UserStatus status;
 

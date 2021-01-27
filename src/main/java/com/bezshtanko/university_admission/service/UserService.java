@@ -60,8 +60,15 @@ public class UserService {
         userRepository.unblockUser(userId);
     }
 
-    public void setEnrolled(List<User> users) {
-        userRepository.setEnrolled(users
+    public void setEnrolledContract(List<User> users) {
+        userRepository.setEnrolledContract(users
+                .stream()
+                .map(User::getId)
+                .collect(Collectors.toList()));
+    }
+
+    public void setEnrolledStateFunded(List<User> users) {
+        userRepository.setEnrolledStateFunded(users
                 .stream()
                 .map(User::getId)
                 .collect(Collectors.toList()));
