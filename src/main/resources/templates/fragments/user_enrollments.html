@@ -1,0 +1,35 @@
+<div xmlns:th="http://www.thymeleaf.org" th:with="lang=${#locale.toString()}">
+
+    <p style="text-align: center" th:if="${enrollments.empty}" th:text="#{enrollments.empty.message}"></p>
+
+    <div th:if="${!enrollments.empty}">
+        <h3 class="page-header"
+            style="text-align: center; margin-top: 30px; margin-bottom: 30px" th:text="#{enrollments.header}"></h3>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col" th:text="#{enrollment.id}"></th>
+                <th scope="col" th:text="#{enrollment.faculty}"></th>
+                <th scope="col" th:text="#{enrollment.faculty.status}"></th>
+                <th scope="col" th:text="#{enrollment.marksSum}"></th>
+                <th scope="col" th:text="#{enrollment.status}"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:class="${enrollment.status == enrollment.status.FINALIZED} ? 'table-success' : ''"
+                th:each="enrollment : ${enrollments}">
+                <th scope="row" th:text="${enrollment.id}"></th>
+                <td>
+                    <a th:href="@{'/faculty/' + ${enrollment.faculty.id}}"
+                       th:text="${lang.equals('ua') ? enrollment.faculty.nameUa : enrollment.faculty.nameEn}">
+                    </a>
+                </td>
+                <td th:text="${enrollment.faculty.status}"></td>
+                <td th:text="${enrollment.marksSum}"></td>
+                <td th:text="${enrollment.status}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

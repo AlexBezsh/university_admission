@@ -1,22 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title th:text="#{faculty.enrollment.title}"></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
-<body>
+<head th:insert="fragments/head_tag.html"></head>
 
+<body>
 <header th:insert="fragments/bodyHeader.html"></header>
 
-<div class="container" style="margin-top: 60px">
+<div class="container" style="margin-top: 60px"
+     th:with="lang=${#locale.toString()}">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <h3 class="special-text" style="margin-bottom: 30px;" th:text="${enrollment.faculty.nameEn}"></h3>
-            <p><b th:text="#{faculty.enrollment.marks}"></b></p>
-            <form style="margin-bottom: 30px" name="form" autocomplete="off" th:action="@{'/faculty/' + ${enrollment.faculty.id} + '/enroll'}"
+            <h3 class="special-text" style="margin-bottom: 30px;" th:text="${lang.equals('ua') ? enrollment.faculty.nameUa : enrollment.faculty.nameEn}"></h3>
+            <p><b th:text="#{enrollment.marks}"></b></p>
+            <form style="margin-bottom: 30px" name="form" autocomplete="off" th:action="@{'/entrant/enroll/' + ${enrollment.faculty.id}}"
                   th:object="${enrollment}" method="post">
                 <label>
                     <input hidden
@@ -26,7 +21,7 @@
                     />
                 </label>
                 <div th:each="mark,i : ${enrollment.marks}">
-                    <p th:text="${' ' + mark.subject.nameEn + ' (' + mark.subject.type + ')'}"></p>
+                    <p th:text="' ' + ${lang.equals('ua') ? mark.subject.nameUa : mark.subject.nameEn} + ' (' + ${mark.subject.type} + ')'"></p>
                     <label >
                         <input hidden th:value="${mark.id}" th:field="*{marks[__${i.index}__].id}" />
                     </label>

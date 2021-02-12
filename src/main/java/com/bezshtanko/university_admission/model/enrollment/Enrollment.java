@@ -8,7 +8,6 @@ import lombok.*;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -38,7 +37,7 @@ public class Enrollment {
     @Enumerated(EnumType.STRING)
     private EnrollmentStatus status;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "enrollment")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "enrollment")
     private List<Mark> marks;
 
     @Transient
@@ -49,16 +48,4 @@ public class Enrollment {
         marksSum = marks.stream().map(Mark::getMark).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Enrollment that = (Enrollment) o;
-        return Objects.equals(user, that.user) && Objects.equals(faculty, that.faculty);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(user, faculty);
-    }
 }

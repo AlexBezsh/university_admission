@@ -1,21 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title th:text="#{faculty.create.title}"></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<head th:insert="fragments/head_tag.html">
 </head>
-<body>
 
+<body>
 <header th:insert="fragments/bodyHeader.html"></header>
 
 <div class="container" style="margin-top: 60px">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <h2 class="page-header" th:text="#{faculty.create.header}"></h2>
-            <form style="margin-bottom: 30px" name="form" autocomplete="off" th:action="@{/faculty/new}"
+            <h2 class="page-header" th:text="#{faculty.edit.header}"></h2>
+            <form style="margin-bottom: 30px" name="form" autocomplete="off" th:action="@{'/faculty/' + ${faculty.id} + '/edit'}"
                   th:object="${faculty}" method="post">
                 <div class="form-group">
                     <label for="nameUa" th:text="#{faculty.nameUa}"></label>
@@ -25,7 +20,7 @@
                            type="text"
                            class="form-control"
                            th:field="*{nameUa}"
-                           th:placeholder="#{faculty.nameUa}"
+                           th:default="${faculty.nameUa}"
                            required>
                 </div>
                 <div class="form-group">
@@ -36,7 +31,7 @@
                            type="text"
                            class="form-control"
                            th:field="*{nameEn}"
-                           th:placeholder="#{faculty.nameEn}"
+                           th:default="${faculty.nameEn}"
                            required>
                 </div>
                 <div class="form-group">
@@ -47,7 +42,7 @@
                            type="text"
                            class="form-control"
                            th:field="*{descriptionUa}"
-                           th:placeholder="#{faculty.descriptionUa}"
+                           th:default="${faculty.descriptionUa}"
                            required>
                 </div>
                 <div class="form-group">
@@ -58,7 +53,7 @@
                            type="text"
                            class="form-control"
                            th:field="*{descriptionEn}"
-                           th:placeholder="#{faculty.descriptionEn}"
+                           th:default="${faculty.descriptionEn}"
                            required>
                 </div>
                 <div class="form-group">
@@ -67,9 +62,10 @@
                                th:errors="*{stateFundedPlaces}"></span>
                     <input id="stateFundedPlaces"
                            type="number"
+                           min="0"
                            class="form-control"
                            th:field="*{stateFundedPlaces}"
-                           th:placeholder="#{faculty.stateFundedPlaces}"
+                           th:default="${faculty.stateFundedPlaces}"
                            required>
                 </div>
                 <div class="form-group">
@@ -78,23 +74,11 @@
                                th:errors="*{contractPlaces}"></span>
                     <input id="contractPlaces"
                            type="number"
+                           min="0"
                            class="form-control"
                            th:field="*{contractPlaces}"
-                           th:placeholder="#{faculty.contractPlaces}"
+                           th:default="${faculty.contractPlaces}"
                            required>
-                </div>
-                <div>
-                    <p><b th:text="#{faculty.subjects}"></b></p>
-                    <label>
-                        <input type="checkbox"
-                               name="subjects"
-                               class="check-box"
-                               th:each="subject : ${faculty.subjects}"
-                               th:utext="${' ' + subject.nameEn + ' (' + subject.type + ')'} + '<br />'"
-                               th:value="${subject.id}"
-                               th:field="*{subjects}"
-                        />
-                    </label>
                 </div>
                 <button type="submit" class="btn btn-default" style="margin-top:30px" th:text="#{submit}">
                 </button>

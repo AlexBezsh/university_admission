@@ -21,9 +21,6 @@ public class SubjectService {
 
     public List<Subject> getAll() {
         return subjectRepository.findAll();
-                /*.stream()
-                .map(SubjectDTO::new)
-                .collect(Collectors.toList());*/
     }
 
 

@@ -1,16 +1,14 @@
 package com.bezshtanko.university_admission.service;
 
-import com.bezshtanko.university_admission.exception.DBException;
+import com.bezshtanko.university_admission.exception.AuthenticationException;
+import com.bezshtanko.university_admission.exception.UserNotExistException;
 import com.bezshtanko.university_admission.model.user.User;
-import com.bezshtanko.university_admission.model.user.UserStatus;
 import com.bezshtanko.university_admission.repository.UserRepository;
+import com.bezshtanko.university_admission.transfer.UserDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -25,30 +23,29 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User getUserById(Long id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new DBException("There is no such user in database"));
-    }
-
-    public User getUserByEmail(String email) {
-        return userRepository.findByEmail(email)
-                .orElseThrow(() -> new DBException("There is no such user in database"));
-    }
-
     public void login(User user) {
         userRepository.findByEmail(user.getEmail()).ifPresent(u -> {
             if (!passwordEncoder.matches(u.getPassword(), passwordEncoder.encode(user.getPassword()))) {
-                throw new DBException();
+                throw new AuthenticationException();
             }
         });
     }
 
-    public void saveNewUser(User user) {
+    public UserDTO findByEmail(String email) {
+        return new UserDTO(userRepository.findByEmail(email)
+                .orElseThrow(UserNotExistException::new));
+    }
+
+    public User findById(Long id) {
+        return userRepository.findById(id).orElseThrow(UserNotExistException::new);
+    }
+
+    public void save(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         try {
             userRepository.save(user);
         } catch (Exception e) {
-            throw new DBException("Error occurred");
+            //todo if user already present
         }
     }
 
@@ -58,20 +55,6 @@ public class UserService {
 
     public void unblockUser(Long userId) {
         userRepository.unblockUser(userId);
-    }
-
-    public void setEnrolledContract(List<User> users) {
-        userRepository.setEnrolledContract(users
-                .stream()
-                .map(User::getId)
-                .collect(Collectors.toList()));
-    }
-
-    public void setEnrolledStateFunded(List<User> users) {
-        userRepository.setEnrolledStateFunded(users
-                .stream()
-                .map(User::getId)
-                .collect(Collectors.toList()));
     }
 
 }

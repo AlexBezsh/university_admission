@@ -51,10 +51,14 @@ VALUES((select id from faculty where name_ua = 'Факультет інформ�
 ((select id from faculty where name_ua = 'Факультет гуманітарних наук'), (select id from subject where name_ua = 'Англійська мова' and type = 'EXAM')),
 ((select id from faculty where name_ua = 'Факультет гуманітарних наук'), (select id from subject where name_ua = 'Англійська мова' and type = 'SCHOOL'));
 
-INSERT INTO user(full_name, email, password, city, region, education) 
+INSERT INTO user(full_name, email, password, city, region, education)
 VALUES('Admin', 'admin@a', '$2a$10$NX.Vcv7DWw7LRNA6Qr40c.9kk3.aNtUFijWrxF3upduG9M01K5JpW', 'Kyiv', 'Kyiv', 'stub'),
-('User', 'user@u', '$2a$10$NX.Vcv7DWw7LRNA6Qr40c.9kk3.aNtUFijWrxF3upduG9M01K5JpW', 'Kyiv', 'Kyiv region', 'Some school');
+      ('User', 'user@u', '$2a$10$NX.Vcv7DWw7LRNA6Qr40c.9kk3.aNtUFijWrxF3upduG9M01K5JpW', 'Kyiv', 'Kyiv region', 'Some school'),
+      ('Admin Servlet', 'a@a', '1c35a06d1808c8a50aff5e2d6adc1beafcb708ffae002feb578550a4ffe38afc', 'Kyiv', 'Kyiv', 'stub'),
+      ('User Servlet', 'u@u', '1c35a06d1808c8a50aff5e2d6adc1beafcb708ffae002feb578550a4ffe38afc', 'Kyiv', 'Kyiv region', 'Some school');
 
-INSERT INTO user_role(user_id, roles) 
+INSERT INTO user_role(user_id, roles)
 VALUES((select id from user where email = 'admin@a'), 'ADMIN'),
-((select id from user where email = 'user@u'), 'ENTRANT'); 
+      ((select id from user where email = 'user@u'), 'ENTRANT'),
+      ((select id from user where email = 'a@a'), 'ADMIN'),
+      ((select id from user where email = 'u@u'), 'ENTRANT');

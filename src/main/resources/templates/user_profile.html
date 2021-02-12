@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
-    <meta charset="UTF-8">
-    <title th:text="#{user.profile}"></title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<head th:insert="fragments/head_tag.html">
 </head>
-<body>
 
+<body>
 <header th:insert="fragments/bodyHeader.html">
 </header>
 <div style="margin-left: 30px; margin-right: 30px;">
@@ -29,11 +25,11 @@
                     <div class="row" sec:authorize="hasAuthority('ADMIN')">
                         <a class="btn btn-danger" style="margin-right: 5px; margin-left: 20px;"
                            th:if="${user.status == user.status.ACTIVE}"
-                           th:href="@{'/user/' + ${user.id} + '/block'}"
+                           th:href="@{'/entrant/' + ${user.id} + '/block'}"
                            th:text="#{user.block}"></a>
                         <a class="btn btn-warning" style="margin-right: 5px; margin-left: 20px;"
                            th:if="${user.status == user.status.BLOCKED}"
-                           th:href="@{'/user/' + ${user.id} + '/unblock'}"
+                           th:href="@{'/entrant/' + ${user.id} + '/unblock'}"
                            th:text="#{user.unblock}"></a>
                     </div>
                 </div>
@@ -41,30 +37,8 @@
         </div>
     </div>
 
-    <h3 th:if="${!user.enrollments.empty}" class="page-header" style="text-align: center; margin-top: 30px; margin-bottom: 30px" th:text="#{user.enrollments}"></h3>
+    <div th:with="enrollments=${user.enrollments}" th:include="fragments/user_enrollments.html"></div>
 
-    <table class="table" th:if="${!user.enrollments.empty}">
-        <thead>
-        <tr>
-            <th scope="col" th:text="#{enrollment.id}"></th>
-            <th scope="col" th:text="#{enrollment.faculty}"></th>
-            <th scope="col" th:text="#{enrollment.marksSum}"></th>
-            <th scope="col" th:text="#{enrollment.status}"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:class="${enrollment.status == enrollment.status.FINALIZED} ? 'table-success' : ''"
-                th:each="enrollment : ${user.enrollments}">
-            <th scope="row" th:text="${enrollment.id}"></th>
-            <td>
-                <a th:href="@{'/faculty/' + ${enrollment.faculty.id}}" th:text="${enrollment.faculty.nameEn}">
-                </a>
-            </td>
-            <td th:text="${enrollment.marksSum}"></td>
-            <td th:text="${enrollment.status}"></td>
-        </tr>
-        </tbody>
-    </table>
 </div>
 </body>
 </html>

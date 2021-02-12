@@ -1,40 +1,40 @@
 package com.bezshtanko.university_admission.service;
 
 import com.bezshtanko.university_admission.model.enrollment.Enrollment;
+import com.bezshtanko.university_admission.model.enrollment.EnrollmentStatus;
+import com.bezshtanko.university_admission.model.user.User;
 import com.bezshtanko.university_admission.repository.EnrollmentRepository;
+import com.bezshtanko.university_admission.repository.MarkRepository;
+import com.bezshtanko.university_admission.transfer.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import javax.transaction.Transactional;
 
 @Service
 public class EnrollmentService {
 
     private final EnrollmentRepository enrollmentRepository;
+    private final MarkRepository markRepository;
 
     @Autowired
-    public EnrollmentService(EnrollmentRepository enrollmentRepository) {
+    public EnrollmentService(EnrollmentRepository enrollmentRepository, MarkRepository markRepository) {
         this.enrollmentRepository = enrollmentRepository;
+        this.markRepository = markRepository;
     }
 
-    public Enrollment saveNewEnrollment(Enrollment enrollment) {
-        return enrollmentRepository.save(enrollment);
+    @Transactional
+    public void saveNewEnrollment(Enrollment enrollment, UserDTO user) {
+        enrollment.setUser(User.builder().id(user.getId()).build());
+        enrollment.setStatus(EnrollmentStatus.NEW);
+        enrollment.getMarks().forEach(m -> m.setEnrollment(enrollment));
+
+        enrollmentRepository.save(enrollment);
+        markRepository.saveAll(enrollment.getMarks());
     }
 
-    public void setApproved(Long enrollmentId) {
-        enrollmentRepository.setApproved(enrollmentId);
-    }
-
-    public void setFinalized(List<Enrollment> enrollments) {
-        enrollmentRepository.setFinalized(enrollments
-                .stream()
-                .map(Enrollment::getId)
-                .collect(Collectors.toList()));
-    }
-
-    public List<Enrollment> getAllEnrollments(Long facultyId) {
-        return enrollmentRepository.findAllByFacultyId(facultyId);
+    public void setApproved(Long id) {
+        enrollmentRepository.setApproved(id);
     }
 
 }

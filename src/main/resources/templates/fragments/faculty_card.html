@@ -1,0 +1,50 @@
+<div xmlns:th="http://www.thymeleaf.org"
+     xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+     class="card"
+     style="margin-bottom: 10px; margin-top: 10px"
+     th:with="lang=${#locale.toString()}">
+    <a class="card-header" th:href="@{'/faculty/' + ${faculty.id}}" th:text="${lang.equals('ua')} ? ${faculty.nameUa} : ${faculty.nameEn}"></a>
+    <div class="card-body">
+        <div class="row" style="justify-content: space-between">
+            <div class="list-view" style="width: 30rem; margin-left: 10px;">
+                <p class="card-text" style="margin-right: 10px; width: available"
+                   th:text="${lang.equals('ua')} ? ${faculty.descriptionUa} : ${faculty.descriptionEn}"></p>
+                <p class="card-text" style="margin-right: 10px"
+                   th:text="#{faculty.status} + ${': ' + faculty.status}"></p>
+                <p class="card-text" style="margin-right: 10px"
+                   th:text="#{faculty.stateFundedPlaces} + ${': ' + faculty.stateFundedPlaces}"></p>
+                <p class="card-text" style="margin-right: 10px"
+                   th:text="#{faculty.contractPlaces} + ${': ' + faculty.contractPlaces}"></p>
+                <p class="card-text" style="margin-right: 10px"
+                   th:text="#{faculty.totalPlaces} + ${': ' + faculty.totalPlaces}"></p>
+                <div th:if="${faculty.status == faculty.status.ACTIVE}">
+                    <div sec:authorize="hasAuthority('ENTRANT')">
+                        <a th:if="${faculty.registrationAllowed}" class="btn btn-success" style="margin-right: 5px; margin-left: 15px; margin-bottom: 5px;"
+                           th:href="@{'/entrant/enroll/' + ${faculty.id}}"
+                           th:text="#{faculty.enroll}"></a>
+                        <div th:if="${!faculty.registrationAllowed}">
+                            <div class="alert alert-primary" role="alert" th:text="#{faculty.message.alreadyRegistered}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" sec:authorize="hasAuthority('ADMIN')">
+                        <a class="btn btn-primary" style="margin-right: 5px; margin-left: 25px; margin-bottom: 5px;"
+                           th:href="@{'/faculty/' + ${faculty.id} + '/edit'}"
+                           th:text="#{edit}"></a>
+                        <a class="btn btn-danger" style="margin-right: 5px; margin-left: 5px; margin-bottom: 5px;"
+                           th:href="@{'/faculty/' + ${faculty.id} + '/delete'}"
+                           th:text="#{delete}"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="card" style="width: 20rem; margin: 10px">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="#{faculty.subjects}"></h5>
+                    <ul th:each="subject : ${faculty.subjects}">
+                        <li th:text="${lang.equals('ua') ? subject.nameUa : subject.nameEn} + ' (' + ${subject.type} + ')'"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

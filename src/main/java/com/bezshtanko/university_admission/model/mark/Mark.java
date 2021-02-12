@@ -7,7 +7,6 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import java.math.BigDecimal;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -37,16 +36,4 @@ public class Mark {
     @Min(0)
     private BigDecimal mark;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Mark mark = (Mark) o;
-        return Objects.equals(enrollment, mark.enrollment) && Objects.equals(subject, mark.subject);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(enrollment, subject);
-    }
 }

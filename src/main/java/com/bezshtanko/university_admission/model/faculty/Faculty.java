@@ -8,7 +8,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import java.util.List;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -59,7 +58,8 @@ public class Faculty {
     @Transient
     private Integer totalPlaces;
 
-    @OneToMany(targetEntity = Subject.class, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Subject.class, fetch = FetchType.LAZY)
+    @Size(min = 1)
     private List<Subject> subjects;
 
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
@@ -69,19 +69,6 @@ public class Faculty {
     @PostLoad
     private void countTotalPlaces() {
         totalPlaces = stateFundedPlaces + contractPlaces;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Faculty faculty = (Faculty) o;
-        return Objects.equals(nameUa, faculty.nameUa);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(nameUa);
     }
 
 }

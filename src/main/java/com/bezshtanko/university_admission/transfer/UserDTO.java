@@ -1,10 +1,12 @@
 package com.bezshtanko.university_admission.transfer;
 
+import com.bezshtanko.university_admission.model.enrollment.Enrollment;
 import com.bezshtanko.university_admission.model.user.UserRole;
 import com.bezshtanko.university_admission.model.user.UserStatus;
 import com.bezshtanko.university_admission.model.user.User;
 import lombok.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -23,6 +25,7 @@ public class UserDTO {
     private String city;
     private String region;
     private String education;
+    private List<Enrollment> enrollments;
 
     public UserDTO(User user) {
         this.id = user.getId();
@@ -33,6 +36,7 @@ public class UserDTO {
         this.city = user.getCity();
         this.region = user.getRegion();
         this.education = user.getEducation();
+        this.enrollments = user.getEnrollments();
     }
 
 }

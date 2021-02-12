@@ -1,0 +1,46 @@
+<div xmlns:th="http://www.thymeleaf.org">
+    <div th:if="${enrollments.empty}">
+        <p style="text-align: center" th:text="#{enrollments.empty.message}"></p>
+    </div>
+
+    <div th:if="${!enrollments.empty}">
+
+        <h3 class="page-header"
+            style="text-align: center; margin-top: 30px; margin-bottom: 30px"
+            th:text="#{enrollments.header}">
+        </h3>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col" th:text="#{enrollment.id}"></th>
+                <th scope="col" th:text="#{enrollment.user}"></th>
+                <th scope="col" th:text="#{enrollment.user.status}"></th>
+                <th scope="col" th:text="#{enrollment.marksSum}"></th>
+                <th scope="col" th:text="#{enrollment.status}"></th>
+                <th scope="col" th:text="#{approve}"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="enrollment : ${enrollments}">
+                <th scope="row" th:text="${enrollment.id}"></th>
+                <td>
+                    <a th:href="@{'/entrant/' + ${enrollment.user.id}}"
+                       th:text="${enrollment.user.fullName}">
+                    </a>
+                </td>
+                <td th:text="${enrollment.user.status}"></td>
+                <td th:text="${enrollment.marksSum}"></td>
+                <td th:text="${enrollment.status}"></td>
+                <td>
+                    <a class="btn btn-success" style="margin-right: 5px; margin-left: 15px;"
+                       th:if="${(enrollment.status == enrollment.status.NEW) && (enrollment.user.status == enrollment.user.status.ACTIVE)}"
+                       th:href="@{'/faculty/' + ${enrollment.faculty.id} + '/enrollment/' + ${enrollment.id} + '/approve'}"
+                       th:text="#{approve}"></a>
+                    <b th:if="${(enrollment.status != enrollment.status.NEW) || (enrollment.user.status != enrollment.user.status.ACTIVE)}">-</b>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

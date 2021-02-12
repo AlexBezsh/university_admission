@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -36,16 +35,4 @@ public class Subject {
     @Size(min = 2, max = 100)
     private String nameUa;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Subject subject = (Subject) o;
-        return type == subject.type && Objects.equals(nameUa, subject.nameUa);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(type, nameUa);
-    }
 }

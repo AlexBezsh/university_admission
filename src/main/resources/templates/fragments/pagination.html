@@ -1,0 +1,21 @@
+<div xmlns:th="http://www.thymeleaf.org" th:if="${faculties.totalElements gt 0}">
+    <nav aria-label="Pagination">
+        <ul class="pagination justify-content-center font-weight-medium">
+
+            <li class="page-item" th:classappend="${faculties.number eq 0} ? 'disabled'">
+                <a class="page-link" th:href="@{'?page=' + ${faculties.number - 1} + '&size=' + ${faculties.size} + '&sort=' + ${faculties.sort.toString().replace(': ', ',')}}"
+                   th:text="#{pageable.previous}"></a>
+            </li>
+
+            <li class="page-item disabled">
+                <a class="page-link" th:href="@{'?page=' + ${faculties.number} + '&size=' + ${faculties.size} + '&sort=' + ${faculties.sort.toString().replace(': ', ',')}}"
+                   th:text="${faculties.number + 1} + ' / ' + ${faculties.totalPages}"></a>
+            </li>
+
+            <li class="page-item" th:classappend="${(faculties.number + 1) eq faculties.totalPages} ? 'disabled'">
+                <a class="page-link" th:href="@{'?page=' + ${faculties.number + 1} + '&size=' + ${faculties.size} + '&sort=' + ${faculties.sort.toString().replace(': ', ',')}}"
+                   th:text="#{pageable.next}"></a>
+            </li>
+        </ul>
+    </nav>
+</div>

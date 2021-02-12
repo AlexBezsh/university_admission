@@ -1,0 +1,15 @@
+<div xmlns:th="http://www.thymeleaf.org">
+    <b style="font-size: 18px;" th:text="#{sort.label}"></b>
+    <a class="btn btn-default" style="margin-bottom: 5px;"
+       th:href="@{'?sort=name' + ${#strings.capitalize(#locale)}}"
+       th:text="#{sort.a-z}"></a>
+    <a class="btn btn-default" style="margin-bottom: 5px;"
+       th:href="@{'?sort=name' + ${#strings.capitalize(#locale)} + ',desc'}"
+       th:text="#{sort.z-a}"></a>
+    <a class="btn btn-default" style="margin-bottom: 5px;"
+       th:href="@{'?sort=stateFundedPlaces,desc'}"
+       th:text="#{sort.stateFundedPlaces}"></a>
+    <a class="btn btn-default" style="margin-bottom: 5px;"
+       th:href="@{'?sort=contractPlaces,desc'}"
+       th:text="#{sort.contractPlaces}"></a>
+</div>

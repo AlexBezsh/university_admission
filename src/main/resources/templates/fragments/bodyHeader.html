@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
-<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
+<nav xmlns:th="http://www.thymeleaf.org"
+     xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+     class="navbar navbar-expand-lg navbar-light bg-light justify-content-between" >
     <a class="navbar-brand" th:text="#{navbar.title}" th:href="@{/faculties}"></a>
     <div class="row" style="margin-right: 10px">
         <div style="margin-right: 30px">
@@ -30,4 +25,3 @@
         </div>
     </div>
 </nav>
-</html>
