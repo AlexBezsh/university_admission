@@ -24,7 +24,7 @@
             <tr th:each="enrollment : ${enrollments}">
                 <th scope="row" th:text="${enrollment.id}"></th>
                 <td><p th:text="${enrollment.user.fullName}"></p></td>
-                <td th:text="${enrollment.user.status}"></td>
+                <td th:text="#{${'user.status.' + enrollment.user.status}}"></td>
                 <td th:text="${enrollment.marksSum}"></td>
                 <td th:text="${enrollment.status}"></td>
             </tr>

@@ -21,7 +21,7 @@
                     />
                 </label>
                 <div th:each="mark,i : ${enrollment.marks}">
-                    <p th:text="' ' + ${lang.equals('ua') ? mark.subject.nameUa : mark.subject.nameEn} + ' (' + ${mark.subject.type} + ')'"></p>
+                    <p th:text="' ' + ${lang.equals('ua') ? mark.subject.nameUa : mark.subject.nameEn} + ' (' + #{${'subject.type.' + mark.subject.type}} + ')'"></p>
                     <label >
                         <input hidden th:value="${mark.id}" th:field="*{marks[__${i.index}__].id}" />
                     </label>

@@ -12,7 +12,7 @@
         <div class="card-body">
             <div class="list-view" style="width: 30rem">
                 <p class="card-text" style="margin-right: 10px"
-                   th:text="#{user.status} + ${': ' + user.status}"></p>
+                   th:text="#{user.status} + ': ' + #{${'user.status.' + user.status}}"></p>
                 <p class="card-text" style="margin-right: 10px"
                    th:text="#{user.email} + ${': ' + user.email}"></p>
                 <p class="card-text" style="margin-right: 10px"

@@ -84,18 +84,16 @@
                     <b th:text="#{faculty.subjects}"></b>
                     <br/>
                     <span class="error" style="color:red" th:if="${#fields.hasErrors('subjects')}"
-                               th:errors="*{subjects}"></span>
+                          th:errors="*{subjects}"></span>
                     <br/>
-                    <label>
-                        <input type="checkbox"
-                               name="subjects"
-                               class="check-box"
-                               th:each="subject : ${faculty.subjects}"
-                               th:utext="${' ' + subject.nameEn + ' (' + subject.type + ')'} + '<br />'"
-                               th:value="${subject.id}"
-                               th:field="*{subjects}"
-                        />
-                    </label>
+                    <input type="checkbox"
+                           name="subjects"
+                           class="check-box"
+                           th:each="subject : ${faculty.subjects}"
+                           th:utext="' ' + ${#locale.toString().equals('ua') ? subject.nameUa : subject.nameEn} + ' (' + #{${'subject.type.' + subject.type}} + ')<br />'"
+                           th:value="${subject.id}"
+                           th:field="*{subjects}"
+                    />
                 </div>
                 <button type="submit" class="btn btn-default" style="margin-top:30px" th:text="#{submit}">
                 </button>

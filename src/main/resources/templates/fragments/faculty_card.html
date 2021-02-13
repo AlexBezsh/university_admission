@@ -10,7 +10,7 @@
                 <p class="card-text" style="margin-right: 10px; width: available"
                    th:text="${lang.equals('ua')} ? ${faculty.descriptionUa} : ${faculty.descriptionEn}"></p>
                 <p class="card-text" style="margin-right: 10px"
-                   th:text="#{faculty.status} + ${': ' + faculty.status}"></p>
+                   th:text="#{faculty.status} + ': ' + #{${'faculty.status.' + faculty.status}}"></p>
                 <p class="card-text" style="margin-right: 10px"
                    th:text="#{faculty.stateFundedPlaces} + ${': ' + faculty.stateFundedPlaces}"></p>
                 <p class="card-text" style="margin-right: 10px"
@@ -41,7 +41,7 @@
                 <div class="card-body">
                     <h5 class="card-title" th:text="#{faculty.subjects}"></h5>
                     <ul th:each="subject : ${faculty.subjects}">
-                        <li th:text="${lang.equals('ua') ? subject.nameUa : subject.nameEn} + ' (' + ${subject.type} + ')'"></li>
+                        <li th:text="${lang.equals('ua') ? subject.nameUa : subject.nameEn} + ' (' + #{${'subject.type.' + subject.type}} + ')'"></li>
                     </ul>
                 </div>
             </div>

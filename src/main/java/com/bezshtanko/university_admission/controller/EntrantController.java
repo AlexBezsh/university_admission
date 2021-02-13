@@ -89,7 +89,6 @@ public class EntrantController {
         log.info("User with email '{}' registered in faculty with id {}", user.getEmail(), facultyId);
 
         enrollmentService.saveNewEnrollment(enrollment, userService.findByEmail(user.getEmail()));
-
         return "redirect:/faculty/" + facultyId;
     }
 

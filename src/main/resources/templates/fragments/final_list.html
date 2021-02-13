@@ -28,7 +28,7 @@
                 </td>
                 <td sec:authorize="hasAuthority('ENTRANT')" th:text="${enrollment.user.fullName}">
                 </td>
-                <td th:text="${enrollment.user.status}"></td>
+                <td th:text="#{${'user.status.' + enrollment.user.status}}"></td>
                 <td th:text="${enrollment.marksSum}"></td>
             </tr>
             </tbody>

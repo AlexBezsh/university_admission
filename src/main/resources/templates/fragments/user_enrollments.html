@@ -25,9 +25,9 @@
                        th:text="${lang.equals('ua') ? enrollment.faculty.nameUa : enrollment.faculty.nameEn}">
                     </a>
                 </td>
-                <td th:text="${enrollment.faculty.status}"></td>
+                <td th:text="#{${'faculty.status.' + enrollment.faculty.status}}"></td>
                 <td th:text="${enrollment.marksSum}"></td>
-                <td th:text="${enrollment.status}"></td>
+                <td th:text="#{${'enrollment.status.' + enrollment.status}}"></td>
             </tr>
             </tbody>
         </table>

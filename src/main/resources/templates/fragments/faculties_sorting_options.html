@@ -1,0 +1,25 @@
+<div xmlns:th="http://www.thymeleaf.org" th:with="sort=${faculties.sort.toString().replace(': ', ',')}">
+    <div th:with="lang=${#strings.capitalize(#locale)}">
+        <b style="font-size: 18px;" th:text="#{sort.label}"></b>
+
+        <a th:class="'btn ' + ${sort.equals('nameEn,ASC') || sort.equals('nameUa,ASC') ? 'btn-light' : 'btn-default'}"
+           style="margin-bottom: 5px;"
+           th:href="@{'?sort=name' + ${lang} + '&size=' + ${faculties.size}}"
+           th:text="#{sort.a-z}"></a>
+
+        <a th:class="'btn ' + ${sort.equals('nameEn,DESC') || sort.equals('nameUa,DESC') ? 'btn-light' : 'btn-default'}"
+           style="margin-bottom: 5px;"
+           th:href="@{'?sort=name' + ${lang} + ',desc&size=' + ${faculties.size}}"
+           th:text="#{sort.z-a}"></a>
+
+        <a th:class="'btn ' + ${sort.equals('stateFundedPlaces,DESC') ? 'btn-light' : 'btn-default'}"
+           style="margin-bottom: 5px;"
+           th:href="@{'?sort=stateFundedPlaces,desc&size=' + ${faculties.size}}"
+           th:text="#{sort.stateFundedPlaces}"></a>
+
+        <a th:class="'btn ' + ${sort.equals('contractPlaces,DESC') ? 'btn-light' : 'btn-default'}"
+           style="margin-bottom: 5px;"
+           th:href="@{'?sort=contractPlaces,desc&size=' + ${faculties.size}}"
+           th:text="#{sort.contractPlaces}"></a>
+    </div>
+</div>
