@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Slf4j
 @Service
 public class UserService {
@@ -24,11 +26,11 @@ public class UserService {
     }
 
     public void login(User user) {
-        userRepository.findByEmail(user.getEmail()).ifPresent(u -> {
-            if (!passwordEncoder.matches(u.getPassword(), passwordEncoder.encode(user.getPassword()))) {
-                throw new AuthenticationException();
-            }
-        });
+        Optional<User> userFromDB = userRepository.findByEmail(user.getEmail());
+        if (!userFromDB.isPresent()
+                || !passwordEncoder.matches(userFromDB.get().getPassword(), passwordEncoder.encode(user.getPassword()))) {
+            throw new AuthenticationException();
+        }
     }
 
     public UserDTO findByEmail(String email) {
@@ -36,9 +38,9 @@ public class UserService {
                 .orElseThrow(UserNotExistException::new));
     }
 
-    public User findById(Long id) {
-        return userRepository.findById(id)
-                .orElseThrow(UserNotExistException::new);
+    public UserDTO findById(Long id) {
+        return new UserDTO(userRepository.findById(id)
+                .orElseThrow(UserNotExistException::new));
     }
 
     public void save(User user) {

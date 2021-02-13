@@ -75,13 +75,7 @@ public class FacultyService {
     }
 
     public void update(Faculty faculty) {
-        facultyRepository.updateFaculty(faculty.getNameUa(),
-                faculty.getNameEn(),
-                faculty.getDescriptionUa(),
-                faculty.getDescriptionEn(),
-                faculty.getStateFundedPlaces(),
-                faculty.getContractPlaces(),
-                faculty.getId());
+        facultyRepository.updateFaculty(faculty);
     }
 
     @Transactional
@@ -109,14 +103,18 @@ public class FacultyService {
 
     private FacultyDTO convertFacultyToDTO(Faculty faculty, User user) {
         FacultyDTO result = new FacultyDTO(faculty);
-        result.setRegistrationAllowed(!getUserFacultiesNames(user).contains(result.getNameEn()));
+        if (result.getStatus() == FacultyStatus.CLOSED) {
+            result.setRegistrationAllowed(false);
+        } else {
+            result.setRegistrationAllowed(!getUserFacultiesNames(user).contains(result.getNameEn()));
+        }
         return result;
     }
 
     private Page<FacultyDTO> convertFacultiesToDTO(Page<Faculty> page, User user) {
         List<String> userFacultiesNames = getUserFacultiesNames(user);
         Page<FacultyDTO> result = page.map(FacultyDTO::new);
-        result.forEach(f -> f.setRegistrationAllowed(!userFacultiesNames.contains(f.getNameEn())));
+        result.forEach(f -> f.setRegistrationAllowed(f.getStatus() != FacultyStatus.CLOSED && !userFacultiesNames.contains(f.getNameEn())));
         return result;
     }
 

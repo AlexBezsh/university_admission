@@ -36,20 +36,6 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Long> {
             nativeQuery = true)
     void setFinalized(Long facultyId, Integer quantity);
 
-    @Modifying
-    @Transactional
-    @Query(value = "UPDATE faculty SET name_ua = :nameUa, name_en = :nameEn, description_ua = :descriptionUa, " +
-            "description_en = :descriptionEn, state_funded_places = :stateFundedPlaces, contract_places = :contractPlaces " +
-            "WHERE id = :id",
-            nativeQuery = true)
-    void updateFaculty(String nameUa,
-                       String nameEn,
-                       String descriptionUa,
-                       String descriptionEn,
-                       Integer stateFundedPlaces,
-                       Integer contractPlaces,
-                       Long id);
-
     @Query("SELECT DISTINCT e FROM Enrollment e LEFT JOIN e.faculty LEFT JOIN e.marks " +
             "WHERE e.user.id = :id")
     List<Enrollment> findAllByUserId(Long id);

@@ -18,7 +18,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString
+@ToString(exclude = {"enrollments"})
 @Entity
 @Table(name = "user",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})

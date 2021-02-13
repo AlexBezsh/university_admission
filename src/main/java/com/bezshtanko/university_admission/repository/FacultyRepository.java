@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
@@ -18,15 +19,11 @@ public interface FacultyRepository extends PagingAndSortingRepository<Faculty, L
 
     @Modifying
     @Transactional
-    @Query(value = "UPDATE faculty SET name_ua = :nameUa, name_en = :nameEn, description_ua = :descriptionUa, description_en = :descriptionEn, state_funded_places = :stateFundedPlaces, contract_places = :contractPlaces WHERE id = :id",
+    @Query(value = "UPDATE faculty SET name_ua = :#{#faculty.nameUa}, name_en = :#{#faculty.nameEn}, description_ua = :#{#faculty.descriptionUa}, " +
+            "description_en = :#{#faculty.descriptionEn}, state_funded_places = :#{#faculty.stateFundedPlaces}, contract_places = :#{#faculty.contractPlaces} " +
+            "WHERE id = :#{#faculty.id}",
             nativeQuery = true)
-    void updateFaculty(String nameUa,
-                       String nameEn,
-                       String descriptionUa,
-                       String descriptionEn,
-                       Integer stateFundedPlaces,
-                       Integer contractPlaces,
-                       Long id);
+    void updateFaculty(@Param("faculty") Faculty faculty);
 
     @Modifying
     @Transactional
