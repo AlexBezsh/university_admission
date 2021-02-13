@@ -7,6 +7,7 @@ import com.bezshtanko.university_admission.model.user.User;
 import com.bezshtanko.university_admission.service.EnrollmentService;
 import com.bezshtanko.university_admission.service.FacultyService;
 import com.bezshtanko.university_admission.service.UserService;
+import com.bezshtanko.university_admission.transfer.UserDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -39,7 +40,9 @@ public class EntrantController {
     public String profile(Model model, @AuthenticationPrincipal User user) {
         log.info("Loading profile page for user with email '{}'", user.getEmail());
 
-        model.addAttribute("user", userService.findByEmail(user.getEmail()));
+        UserDTO userDTO = userService.findByEmail(user.getEmail());
+        userDTO.setEnrollments(enrollmentService.findAllByUserId(userDTO.getId()));
+        model.addAttribute("user", userDTO);
         return "user_profile";
     }
 

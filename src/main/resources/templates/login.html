@@ -17,6 +17,9 @@
             <div th:if="${param.registrationSuccess}" class="alert alert-success">
                 <span th:text="#{registration.success}"></span>
             </div>
+            <div th:if="${param.userAlreadyExist}" class="alert alert-danger">
+                <span th:text="#{user.userAlreadyExistError}"></span>
+            </div>
             <form style="margin-bottom: 30px" autocomplete="off" th:action="@{/login}" th:object="${user}" method="post">
                 <div class="form-group">
                     <label for="email" th:text="#{user.email}"></label>

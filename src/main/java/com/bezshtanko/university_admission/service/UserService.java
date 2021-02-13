@@ -37,16 +37,13 @@ public class UserService {
     }
 
     public User findById(Long id) {
-        return userRepository.findById(id).orElseThrow(UserNotExistException::new);
+        return userRepository.findById(id)
+                .orElseThrow(UserNotExistException::new);
     }
 
     public void save(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        try {
-            userRepository.save(user);
-        } catch (Exception e) {
-            //todo if user already present
-        }
+        userRepository.save(user);
     }
 
     public void blockUser(Long userId) {

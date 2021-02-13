@@ -1,6 +1,7 @@
 package com.bezshtanko.university_admission.controller;
 
 import com.bezshtanko.university_admission.exception.AuthenticationException;
+import com.bezshtanko.university_admission.exception.UserNotExistException;
 import com.bezshtanko.university_admission.model.user.UserRole;
 import com.bezshtanko.university_admission.model.user.UserStatus;
 import com.bezshtanko.university_admission.model.user.User;
@@ -90,6 +91,13 @@ public class AuthenticationController {
         if (bindingResult.hasErrors()) {
             log.error("Registration canceled. User entered invalid data.");
             return "reg_form";
+        }
+
+        try {
+            userService.findByEmail(user.getEmail());
+            return "redirect:/login?userAlreadyExist";
+        } catch (UserNotExistException ignored) {
+            //if user not exist, registration allowed
         }
 
         user.setRoles(new HashSet<>());

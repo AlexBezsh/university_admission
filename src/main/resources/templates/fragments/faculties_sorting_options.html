@@ -17,9 +17,9 @@
            th:href="@{'?sort=stateFundedPlaces,desc&size=' + ${faculties.size}}"
            th:text="#{sort.stateFundedPlaces}"></a>
 
-        <a th:class="'btn ' + ${sort.equals('contractPlaces,DESC') ? 'btn-light' : 'btn-default'}"
+        <a th:class="'btn ' + ${sort.equals('totalPlaces,DESC') ? 'btn-light' : 'btn-default'}"
            style="margin-bottom: 5px;"
-           th:href="@{'?sort=contractPlaces,desc&size=' + ${faculties.size}}"
-           th:text="#{sort.contractPlaces}"></a>
+           th:href="@{'?sort=totalPlaces,desc&size=' + ${faculties.size}}"
+           th:text="#{sort.totalPlaces}"></a>
     </div>
 </div>

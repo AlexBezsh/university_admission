@@ -3,6 +3,7 @@ package com.bezshtanko.university_admission.model.faculty;
 import com.bezshtanko.university_admission.model.enrollment.Enrollment;
 import com.bezshtanko.university_admission.model.subject.Subject;
 import lombok.*;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -55,7 +56,7 @@ public class Faculty {
     @Min(0)
     private Integer contractPlaces;
 
-    @Transient
+    @Formula("state_funded_places + contract_places")
     private Integer totalPlaces;
 
     @OneToMany(targetEntity = Subject.class, fetch = FetchType.LAZY)
@@ -65,10 +66,5 @@ public class Faculty {
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "faculty_id")
     private List<Enrollment> enrollments;
-
-    @PostLoad
-    private void countTotalPlaces() {
-        totalPlaces = stateFundedPlaces + contractPlaces;
-    }
 
 }

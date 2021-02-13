@@ -13,7 +13,7 @@ import javax.transaction.Transactional;
 @Repository
 public interface FacultyRepository extends PagingAndSortingRepository<Faculty, Long> {
 
-    @Query(value = "SELECT DISTINCT f FROM Faculty f LEFT JOIN f.subjects")
+    @Query(value = "SELECT DISTINCT f FROM Faculty f JOIN f.subjects")
     Page<Faculty> findAll(Pageable pageable);
 
     @Modifying
